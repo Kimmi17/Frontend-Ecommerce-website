@@ -7,12 +7,14 @@ import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CategoryProductsPage from "./pages/CategoryProductsPage";
+import HomePage from "./pages/HomePage";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route
           path="/categories/:categoryName"
           element={<CategoryProductsPage />}
