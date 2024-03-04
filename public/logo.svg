@@ -1,0 +1,18 @@
+<svg width="250" height="50" xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <!-- Vascara Logo -->
+        <text x="10" y="38" font-family="'Playfair Display', serif" font-size="40" font-weight="normal" fill="#222">
+            <tspan fill="#222">V</tspan>
+            <tspan dx="0">a</tspan>
+            <tspan dx="0">s</tspan>
+            <tspan dx="0">c</tspan>
+            <tspan dx="0">a</tspan>
+            <tspan dx="0">r</tspan>
+            <tspan dx="0">a</tspan>
+        </text>
+        
+        <!-- Snowflake -->
+        <text x="200" y="38" font-family="'Arial', sans-serif" font-size="30" font-weight="normal" fill="#000">&#x2744;&#xFE0F;</text>
+
+    </g>
+</svg>
