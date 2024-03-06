@@ -1,21 +1,27 @@
-import React from "react";
-import useFetch from "../hook/useFetch";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import store, { RootState } from "../redux/store";
+import { fetchAllProducts } from "../redux/slices/productSlice";
 import ProductList from "./ProductList";
 
-const ProductComponent: React.FC = () => {
-  const { data, loading, error } = useFetch(
-    "https://api.escuelajs.co/api/v1/products"
+const Product = () => {
+  const dispatch = store.dispatch;
+  const products = useSelector((state: RootState) => state.products.products);
+  const loading = useSelector((state: RootState) => state.products.loading);
+  const error = useSelector((state: RootState) => state.products.error);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <ProductList products={products} />
+    </div>
   );
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  return <ProductList products={data} />;
 };
 
-export default ProductComponent;
+export default Product;
