@@ -8,25 +8,34 @@ import {
 
 import SearchBar from "./SearchBar";
 import { NavbarProps } from "../miscs/types/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
+  const cartProducts = useSelector((state: RootState) => state.cart.products);
+
   return (
-    <nav className="navbar py-4">
+    <nav className="navbar p-4">
       {/* Section 1: Logo, Search Bar, Icons */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-4">
         <div className="flex items-center mb-4 md:mb-0">
           <Link to="/">
             <img src="/logo.svg" alt="Logo" />
           </Link>
-          <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+          {/* <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} /> */}
         </div>
         <div className="navbar-icons flex">
           <Link to="/cart" className="mr-4">
-            <AiOutlineShoppingCart size={24} />
+            <div className="relative">
+              <AiOutlineShoppingCart size={24} className="text-gray-500" />
+              {cartProducts.length > 0 && (
+                <div className="absolute top-0 right-0 bg-red-500 w-3 h-3 rounded-full"></div>
+              )}
+            </div>
           </Link>
-          <Link to="/favorites" className="mr-4">
+          {/* <Link to="/favorites" className="mr-4">
             <AiOutlineHeart size={24} />
-          </Link>
+          </Link> */}
           <Link to="/profile">
             <AiOutlineUser size={24} />
           </Link>
@@ -46,11 +55,11 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
               About
             </Link>
           </li>
-          <li className="mr-4">
+          {/* <li className="mr-4">
             <Link to="/products" className="text-lg">
               Products
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/contact" className="text-lg">
               Contact Us

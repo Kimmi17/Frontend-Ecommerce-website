@@ -1,10 +1,13 @@
-import { Product } from "./types";
+// import { Product } from "./types";
 
 export interface User {
   id: number;
-  name: string;
   email: string;
-  cart: Product[];
+  name: string;
+  role: string;
+  avatar: string;
+  creationAt: string;
+  updatedAt: string;
 }
 
 export interface UserState {

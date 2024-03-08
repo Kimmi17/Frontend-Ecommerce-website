@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { LoginFormValues, RegisterFormValues } from "../../miscs/types/types";
-import { initialState } from "../../miscs/types/UserState";
+import { User, initialState } from "../../miscs/types/UserState";
+import { toast } from "../../components/ui/use-toast";
 
 const apiUrl = "https://api.escuelajs.co/api/v1/auth";
 
@@ -17,7 +18,20 @@ export const loginUser = createAsyncThunk(
         email,
         password,
       });
-      return response.data.access_token;
+      let user = null;
+      if (response) {
+        const userResponse = await axios.get<User>(`${apiUrl}/profile`, {
+          headers: {
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
+        user = userResponse.data;
+      }
+      toast({
+        title: "Login successful",
+        description: `Welcome back, ${user?.email}`,
+      });
+      return { token: response.data.access_token, user };
     } catch (error) {
       throw new Error("Invalid email or password");
     }
@@ -56,7 +70,8 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload;
+        state.token = action.payload.token;
+        state.currentUser = action.payload.user;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;

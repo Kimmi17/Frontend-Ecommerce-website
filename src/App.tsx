@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import { fetchCategories } from "./redux/slices/categorySlice";
 import AboutPage from "./pages/AboutPage";
 import Footer from "./components/Footer";
+import ScrollToTopButton from "./components/ScrollToTopBottom";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +40,9 @@ const App: React.FC = () => {
           <Route path={":categoryId"} element={<CategoryProductsPage />} />
         </Route>
       </Routes>
+      <div className="h-[100px]" />
       <Footer />
+      <ScrollToTopButton />
     </BrowserRouter>
   );
 };

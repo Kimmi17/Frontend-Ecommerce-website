@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import store, { RootState } from "../redux/store";
 import { fetchAllProducts } from "../redux/slices/productSlice";
 import ProductList from "./ProductList";
+import FilterForm from "./FilterForm";
 
 const Product = () => {
   const dispatch = store.dispatch;
@@ -19,6 +20,7 @@ const Product = () => {
 
   return (
     <div>
+      <FilterForm />
       <ProductList products={products} />
     </div>
   );

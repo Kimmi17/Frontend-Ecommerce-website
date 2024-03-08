@@ -24,7 +24,7 @@ const Category = () => {
   return (
     <div>
       <h2>Categories</h2>
-      <div>
+      <div className="flex flex-wrap">
         {categories.map((category) => (
           <CategoryCard key={category.id} category={category} />
         ))}
