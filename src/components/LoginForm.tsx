@@ -8,6 +8,9 @@ const LoginForm: React.FC<{
   const dispatch = store.dispatch;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -20,25 +23,23 @@ const LoginForm: React.FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Reset errors
+    setErrors({});
+
+    // Validation
+    const validationErrors: { email?: string; password?: string } = {};
+    if (!email) {
+      validationErrors.email = "Email is required";
+    }
+    if (!password) {
+      validationErrors.password = "Password is required";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
-      //   const response = await fetch(
-      //     "https://api.escuelajs.co/api/v1/auth/login",
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //       body: JSON.stringify({
-      //         email,
-      //         password,
-      //       }),
-      //     }
-      //   );
-
-      //   if (!response.ok) {
-      //     throw new Error("Invalid email or password");
-      //   }
-
       dispatch(loginUser({ email, password }));
       console.log("Login successful");
     } catch (error) {
@@ -64,9 +65,14 @@ const LoginForm: React.FC<{
               name="email"
               value={email}
               onChange={handleEmailChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              className={`mt-1 px-4 py-2 block w-full border rounded-md ${
+                errors.email ? "border-red-500" : ""
+              }`}
               required
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -81,9 +87,14 @@ const LoginForm: React.FC<{
               name="password"
               value={password}
               onChange={handlePasswordChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              className={`mt-1 px-4 py-2 block w-full border rounded-md ${
+                errors.password ? "border-red-500" : ""
+              }`}
               required
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
+            )}
           </div>
           <button
             type="submit"

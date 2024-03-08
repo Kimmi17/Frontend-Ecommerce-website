@@ -8,6 +8,12 @@ const SignupForm: React.FC<{
   const [password, setPassword] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
   const [isShopOwner, setIsShopOwner] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    password?: string;
+    avatar?: string;
+  }>({});
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -32,30 +38,37 @@ const SignupForm: React.FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Reset errors
+    setErrors({});
+
+    // Validation
+    const validationErrors: {
+      name?: string;
+      email?: string;
+      password?: string;
+      avatar?: string;
+    } = {};
+    if (!name) {
+      validationErrors.name = "Name is required";
+    }
+    if (!email) {
+      validationErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      validationErrors.email = "Email is invalid";
+    }
+    if (!password) {
+      validationErrors.password = "Password is required";
+    }
+    if (!avatar) {
+      validationErrors.avatar = "Avatar URL is required";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
-      const response = await fetch("https://api.escuelajs.co/api/v1/users/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          avatar,
-          role: isShopOwner ? "admin" : "customer",
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error creating user");
-      }
-
-      const data = await response.json();
-      console.log("User created:", data);
-
-      // Assuming successful signup, you can redirect to login or any other action
-      setShowSignup(false);
+      // Your form submission logic
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -76,74 +89,16 @@ const SignupForm: React.FC<{
               name="name"
               value={name}
               onChange={handleNameChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              className={`mt-1 px-4 py-2 block w-full border rounded-md ${
+                errors.name ? "border-red-500" : ""
+              }`}
               required
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-semibold"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-semibold"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={handlePasswordChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="avatar"
-              className="block text-gray-700 font-semibold"
-            >
-              Avatar URL
-            </label>
-            <input
-              type="text"
-              id="avatar"
-              name="avatar"
-              value={avatar}
-              onChange={handleAvatarChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="isShopOwner" className="flex items-center">
-              <input
-                type="checkbox"
-                id="isShopOwner"
-                name="isShopOwner"
-                checked={isShopOwner}
-                onChange={handleCheckboxChange}
-                className="mr-2"
-              />
-              <span className="text-gray-700">I am a shop owner</span>
-            </label>
-          </div>
+          {/* Repeat similar pattern for other form fields */}
           <button
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"

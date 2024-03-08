@@ -29,7 +29,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           style={{ width: "100%", height: "auto" }}
         />
         <p className="mb-1">
-          <span className="font-semibold">Price:</span> ${product.price}
+          <span className="font-semibold">Price:</span>{" "}
+          <span style={{ color: "red" }}>${product.price}</span>
         </p>
         <Link
           to={`/products/${product.id}`}
