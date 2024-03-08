@@ -6,7 +6,6 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 
-import SearchBar from "./SearchBar";
 import { NavbarProps } from "../miscs/types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
