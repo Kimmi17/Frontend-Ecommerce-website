@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "./SearchBar";
 import {
   AiOutlineShoppingCart,
   AiOutlineHeart,
   AiOutlineUser,
 } from "react-icons/ai";
 
-const Navbar: React.FC = () => {
+import SearchBar from "./SearchBar";
+import { NavbarProps } from "../miscs/types/types";
+
+const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
   return (
     <nav className="navbar py-4">
       {/* Section 1: Logo, Search Bar, Icons */}
@@ -16,7 +18,7 @@ const Navbar: React.FC = () => {
           <Link to="/">
             <img src="/logo.svg" alt="Logo" />
           </Link>
-          <SearchBar />
+          <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
         </div>
         <div className="navbar-icons flex">
           <Link to="/cart" className="mr-4">

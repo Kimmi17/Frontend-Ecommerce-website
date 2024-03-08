@@ -6,7 +6,6 @@ const Footer: React.FC = () => {
       className="bg-gradient-to-r from-c5eff7 to-96d6e0 py-8 px-8 text-center bottom-0 w-full"
       style={{
         background: "linear-gradient(to right, #c5eff7, #96d6e0)",
-        marginTop: "20px",
       }}
     >
       <p className="text-black font-serif font-bold">

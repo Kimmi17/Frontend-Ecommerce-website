@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Product } from "../miscs/types";
+import { Product } from "../miscs/types/types";
 
 const useFetch = (url: string) => {
   const [data, setData] = useState<Product[]>([]);

@@ -1,18 +1,34 @@
+// productSlice.ts
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { Product, initialState } from "../../miscs/types";
+import { Product } from "../../miscs/types/types";
+import { initialState } from "../../miscs/types/ProductState";
 
-const PRODUCT_API_URL = "https://api.escuelajs.co/api/v1/products";
+const url = "https://api.escuelajs.co/api/v1/products";
 
 export const fetchAllProducts = createAsyncThunk(
   "fetchAllProducts",
   async () => {
     try {
-      const response = await axios.get<Product[]>(PRODUCT_API_URL);
+      const response = await axios.get<Product[]>(url);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching products");
+    }
+  }
+);
+
+// New async thunk action creator to fetch a product by its ID
+export const fetchProductById = createAsyncThunk(
+  "fetchProductById",
+  async (productId: string) => {
+    try {
+      const response = await axios.get<Product>(`${url}/${productId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching product by ID");
     }
   }
 );
@@ -34,6 +50,18 @@ const productSlice = createSlice({
       .addCase(fetchAllProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Error fetching products";
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Error fetching product by ID";
       });
   },
 });
