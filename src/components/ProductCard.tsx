@@ -37,7 +37,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
           View Detail
         </Link>
-        {!isAdmin && <button onClick={addProductToCart}>Add to cart</button>}
+        {!isAdmin && (
+          <button
+            className="text-black font-semibold font-serif py-2 px-4 rounded-lg inline-block mt-2"
+            onClick={addProductToCart}
+          >
+            Add To Cart
+          </button>
+        )}
       </div>
     </div>
   );

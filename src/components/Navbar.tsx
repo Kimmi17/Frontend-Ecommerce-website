@@ -14,7 +14,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
   const cartProducts = useSelector((state: RootState) => state.cart.products);
 
   return (
-    <nav className="navbar p-4">
+    <nav className="navbar p-4 bg-gray-100">
       {/* Section 1: Logo, Search Bar, Icons */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-4">
         <div className="flex items-center mb-4 md:mb-0">
@@ -24,7 +24,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
           {/* <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} /> */}
         </div>
         <div className="navbar-icons flex">
-          <Link to="/cart" className="mr-4">
+          <Link to="/cart" className="mr-4 hover:text-gray-700">
             <div className="relative">
               <AiOutlineShoppingCart size={24} className="text-gray-500" />
               {cartProducts.length > 0 && (
@@ -35,7 +35,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
           {/* <Link to="/favorites" className="mr-4">
             <AiOutlineHeart size={24} />
           </Link> */}
-          <Link to="/profile">
+          <Link to="/profile" className="hover:text-gray-700">
             <AiOutlineUser size={24} />
           </Link>
         </div>
@@ -45,12 +45,12 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
       <div className="flex justify-center md:justify-end">
         <ul className="navbar-nav flex">
           <li className="mr-4">
-            <Link to="/" className="text-lg">
+            <Link to="/" className="text-lg hover:text-gray-700">
               Home
             </Link>
           </li>
           <li className="mr-4">
-            <Link to="/about" className="text-lg">
+            <Link to="/about" className="text-lg hover:text-gray-700">
               About
             </Link>
           </li>
@@ -60,7 +60,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
             </Link>
           </li> */}
           <li>
-            <Link to="/contact" className="text-lg">
+            <Link to="/contact" className="text-lg hover:text-gray-700">
               Contact Us
             </Link>
           </li>
