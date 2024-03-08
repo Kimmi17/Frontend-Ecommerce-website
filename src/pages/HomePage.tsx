@@ -8,6 +8,7 @@ const HomePage = () => {
     <div className="product-list">
       <Slider />
       <Benefits />
+      <div style={{ marginTop: "20px" }} />
       <Product />
       <Category />
     </div>

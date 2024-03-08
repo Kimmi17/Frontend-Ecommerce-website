@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import store, { RootState } from "../redux/store";
 import { fetchProductById } from "../redux/slices/productSlice";
 import { useSelector } from "react-redux";

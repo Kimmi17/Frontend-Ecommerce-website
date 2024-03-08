@@ -1,10 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  AiOutlineShoppingCart,
-  AiOutlineHeart,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 
 import { NavbarProps } from "../miscs/types/types";
 import { useSelector } from "react-redux";
@@ -32,9 +28,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
               )}
             </div>
           </Link>
-          {/* <Link to="/favorites" className="mr-4">
-            <AiOutlineHeart size={24} />
-          </Link> */}
+
           <Link to="/profile" className="hover:text-gray-700">
             <AiOutlineUser size={24} />
           </Link>
@@ -54,11 +48,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
               About
             </Link>
           </li>
-          {/* <li className="mr-4">
-            <Link to="/products" className="text-lg">
-              Products
-            </Link>
-          </li> */}
+
           <li>
             <Link to="/contact" className="text-lg hover:text-gray-700">
               Contact Us

@@ -40,7 +40,7 @@ const Benefits: React.FC = () => {
   ];
 
   return (
-    <div className="container mt-8">
+    <div className="container mt-8 flex justify-center">
       <h2 className="text-3xl font-bold mb-4 text-gray-900">
         Our Promises to You
       </h2>
@@ -51,7 +51,7 @@ const Benefits: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="w-full"
+            className="w-full flex justify-center" // Apply flexbox properties
           >
             <BenefitCard
               icon={item.icon}

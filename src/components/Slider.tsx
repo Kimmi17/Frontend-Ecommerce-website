@@ -6,16 +6,16 @@ const Slider: React.FC = () => {
 
   const data: string[] = [
     "https://images.pexels.com/photos/1549200/pexels-photo-1549200.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "https://images.pexels.com/photos/949670/pexels-photo-949670.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "https://images.pexels.com/photos/837140/pexels-photo-837140.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    //   "https://images.pexels.com/photos/949670/pexels-photo-949670.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    //   "https://images.pexels.com/photos/837140/pexels-photo-837140.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    // ];
   ];
-
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? 2 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? data.length - 1 : prev - 1));
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === data.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -31,7 +31,7 @@ const Slider: React.FC = () => {
               src={image}
               alt={`Slide ${index}`}
               className="w-full h-full object-cover"
-              style={{ width: "100vw", height: "100vh" }}
+              style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
             />
           ))}
         </div>

@@ -1,50 +1,134 @@
-# Frontend project
+# Vascara Website
 
-This repository for the Frontend project to build an e-commerce website.
+Vascara Website is an e-commerce web application built with React, offering users a seamless online shopping experience. It fetches product data from various sources and provides features such as browsing products, managing categories, and user authentication.
 
-## Requirements
+## Table of Contents
 
-### Basic requirements
+1. [Getting Started](#getting-started)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Project Structure](#project-structure)
+5. [Testing](#testing)
+6. [Deployment](#deployment)
 
-The Front end project must use TypeScript and Redux toolkit.
+## Getting Started
 
-1. Use the API endpoint `https://fakeapi.platzi.com/`.
+To get started with the Vascara Website project, follow these steps:
 
-2. Create at lease 4 pages (can be more if you want): Page for all products, product page, profile page (only available if user logins), and cart page (cart page could be a page or a modal)
+### For npm users
 
-3. Create Redux store for following features:
+1. Clone the repository:
 
-   - product reducer: get all products, find a single products, filter products by categories, sort products by price. Create, update and delete a product (enable update & delete features only for admin of the webapp)
-   - user reducer: register and login
-   - cart reducer: add product to cart, remove products, update products's quantity in cart
+git clone
+cd vascara-website
+npm install
+git clone https://github.com/your-username/vascara-website
+yarn install
+yarn start
+Product Details
+Category Management
+User Authentication
+Demo Account
 
-4. When adding routers to your application, set certain routes to be private. For example, route to user profile page should not be accessible if user has not logged in.
+Toast Notifications
+Responsive Design
+Technologies Used
+TypeScript
+Redux Toolkit
+React
+Material UI
+Project Structure
+css
+Copy code
+project-root/
+├── node_modules/
+├── package-lock.json
+├── package.json
+├── public/
+│ ├── ...
+├── README.md
+├── src/
+│ ├── App.test.tsx
+│ ├── App.tsx
+│ ├── components/
+│ │ ├── AuthModal.tsx
+│ │ ├── Category/
+│ │ │ ├── CategoryCard.tsx
+│ │ │ └── Category.tsx
+│ │ ├── FilterForm.tsx
+│ │ ├── Footer.tsx
+│ │ ├── LoginForm.tsx
+│ │ ├── Navbar.tsx
+│ │ ├── Product/
+│ │ │ ├── Product.tsx
+│ │ │ ├── ProductCard.tsx
+│ │ │ ├── ProductForm.tsx
+│ │ │ ├── ProductList.tsx
+│ │ │ └── ProductDetailsPage.tsx
+│ │ ├── SignUpForm.tsx
+│ │ ├── Slider.tsx
+│ │ └── ui/
+│ │ ├── alert-dialog.tsx
+│ │ ├── button.tsx
+│ │ ├── dialog.tsx
+│ │ ├── pagination.tsx
+│ │ ├── popover.tsx
+│ │ ├── table.tsx
+│ │ ├── tabs.tsx
+│ │ ├── toast.tsx
+│ │ ├── toaster.tsx
+│ │ ├── use-toast.ts
+│ │ └── UserInfo.tsx
+│ ├── index.css
+│ ├── index.tsx
+│ ├── lib/
+│ │ └── utils.ts
+│ ├── logo.svg
+│ ├── miscs/
+│ │ └── types/
+│ │ ├── CartState.ts
+│ │ ├── CategoryState.ts
+│ │ ├── FilterState.ts
+│ │ ├── ProductState.ts
+│ │ └── UserState.ts
+│ ├── pages/
+│ │ ├── AboutPage.tsx
+│ │ ├── CartPage.tsx
+│ │ ├── CategoryProductsPage.tsx
+│ │ ├── ContactPage.tsx
+│ │ ├── HomePage.tsx
+│ │ ├── ProductDetailsPage.tsx
+│ │ ├── ProductsPage.tsx
+│ │ ├── ProfilePage.tsx
+│ │ └── Register.tsx
+│ ├── react-app-env.d.ts
+│ ├── redux/
+│ │ ├── slices/
+│ │ │ ├── cartSlice.ts
+│ │ │ ├── categorySlice.ts
+│ │ │ ├── filterSlice.ts
+│ │ │ ├── productSlice.ts
+│ │ │ └── userSlice.ts
+│ │ └── store.ts
+│ ├── reportWebVitals.ts
+│ └── setupTests.ts
+├── tailwind.config.js
+├── test/
+│ ├── cartSlice.test.ts
+│ ├── categorySlice.test.ts
+│ ├── productSlice.test.ts
+│ └── userSlice.test.ts
+├── tsconfig.json
+└── yarn.lock
+Testing
+For npm users
+Ensure all dependencies are installed:
+bash
 
-5. Styling: must have responsive
+npm install
+Run the test suite:
 
-6. Implement unit testing for the reducers
-
-7. **Deploy** the application and rewrite README file.
-
-### Additional features:
-
-- Use Context API to switch theme
-- Use pagination when fetching/displaying all the products
-- Implement performance optimization where applicable
-
-## Grading (1-5)
-
-1: Late submission or not complete basic requirements
-
-2: Basic requirement + Presentation
-
-3: Folder structure + follow convention(naming convention ,loading, error) + some additional features
-
-4: All additional features + reusable logic + custom hook
-
-5: UI-UX (for example: send alert when user add same product) + styling (animation or transition, scroll to top) + advanced feature (google log in)
-
-## Deadline
-
-- Presentation: **7/3** and **8/3/ 2024**
-- Submitting Front-end project **10am 8/3/2024**
+Copy code
+npm test
+Live link " User
+https://fs17-frontend-project-seven.vercel.app/"

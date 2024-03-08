@@ -23,7 +23,7 @@ const Category = () => {
 
   return (
     <div>
-      <h2>Categories</h2>
+      <h2 className="text-3xl font-bold mb-4 text-gray-900">Categories</h2>
       <div className="flex flex-wrap">
         {categories.map((category) => (
           <CategoryCard key={category.id} category={category} />

@@ -14,7 +14,6 @@ import { Button } from "../components/ui/button";
 import { RootState } from "../redux/store";
 import {
   addProductsToCart,
-  deleteProductsToCart,
   removeProductsToCart,
 } from "../redux/slices/cartSlice";
 import { Product } from "../miscs/types/types";

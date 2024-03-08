@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FilterState, initialState } from "../../miscs/types/FilterState";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import store, { RootState } from "../store";
-import { fetchAllProducts } from "./productSlice";
+import { RootState } from "../store";
 
 const filterSlice = createSlice({
   name: "filters",
