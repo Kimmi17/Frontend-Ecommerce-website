@@ -1,45 +1,40 @@
 # Vascara Website
 
-Vascara Website is an e-commerce web application built with React, offering users a seamless online shopping experience. It fetches product data from various sources and provides features such as browsing products, managing categories, and user authentication.
-
-## Table of Contents
+Vascara Website is an e-commerce web application built with React, offering users a seamless online shopping experience. IThe Vascara Website fetches product data from [Platzi Fake Store API](https://fakeapi.platzi.com/), providing users with a diverse selection of products to browse and explore.
 
 1. [Getting Started](#getting-started)
-2. [Features](#features)
-3. [Technologies Used](#technologies-used)
-4. [Project Structure](#project-structure)
-5. [Testing](#testing)
-6. [Deployment](#deployment)
+2. [Technologies Used](#technologies-used)
+3. [Project Structure](#project-structure)
+4. [Testing](#testing)
+5. [Deployment](#deployment)
 
 ## Getting Started
 
 To get started with the Vascara Website project, follow these steps:
 
-### For npm users
+### npm users
 
-1. Clone the repository:
+1. Clone the repository: `git@github.com:Kimmi17/fs17-Frontend-project.git `
+2. Navigate to the project directory: `cd vascara-website`
+3. Install dependencies: `npm install`
+4. Run: `npm start`
 
-git clone
-cd vascara-website
-npm install
-git clone https://github.com/your-username/vascara-website
-yarn install
-yarn start
-Product Details
-Category Management
-User Authentication
-Demo Account
+### yarn users
 
-Toast Notifications
-Responsive Design
-Technologies Used
-TypeScript
-Redux Toolkit
-React
-Material UI
-Project Structure
-css
-Copy code
+1. Clone the repository: `git clone `
+2. Navigate to the project directory: `cd vascara-website`
+3. Install dependencies: `yarn install`
+4. Run : `yarn start`
+
+## Technologies Used
+
+- TypeScript
+- Redux Toolkit
+- React
+- Tailwind Css
+
+## Project Structure
+
 project-root/
 ├── node_modules/
 ├── package-lock.json
@@ -120,15 +115,33 @@ project-root/
 │ └── userSlice.test.ts
 ├── tsconfig.json
 └── yarn.lock
-Testing
-For npm users
-Ensure all dependencies are installed:
-bash
 
-npm install
-Run the test suite:
+### Pages
 
-Copy code
-npm test
-Live link " User
-https://fs17-frontend-project-seven.vercel.app/"
+- **Home Page:** Displays all products fetched from the API.
+- **Product Detail Page:** Shows detailed information about a single product.
+- **Profile Page:** Displays user information
+- **Cart Page:** Displays the products added to the cart
+
+### Redux Store
+
+- **Actions:**
+  - Fetch all products
+  - Find a single product
+  - Filter products by categories
+  - Sort products by price
+  - User registration
+  - User login
+  - Add product to cart
+  - Remove product from cart
+  - Update product quantity in cart
+
+## Routing
+
+- Set up routes for different pages using React Router.
+
+## Unit Testing
+
+## Deployment
+
+Check out the [Live Demo](https://fs17-frontend-project-seven.vercel.app/) to experience the Vascara Website in action.
