@@ -1,7 +1,9 @@
+export type OrderBy = "ACS" | "DECS" | null;
+
 export interface FilterState {
   filters: {
-    priceRange: number[] | null;
     categoryId: string | null;
+    orderBy: OrderBy;
     limit: number;
     offset: number;
   };
@@ -9,9 +11,9 @@ export interface FilterState {
 
 export const initialState: FilterState = {
   filters: {
-    priceRange: null,
     categoryId: null,
-    limit: 30,
+    orderBy: null,
+    limit: 24,
     offset: 0,
   },
 };

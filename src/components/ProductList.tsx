@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProductListProps } from "../miscs/types/types";
+import { Product, ProductListProps } from "../miscs/types/types";
 import ProductCard from "./ProductCard";
 import {
   Pagination,
@@ -15,41 +15,26 @@ import store, { RootState } from "../redux/store";
 import filterSlice from "../redux/slices/filterSlice";
 import { fetchAllProducts } from "../redux/slices/productSlice";
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const ProductList: React.FC = () => {
   const filters = useSelector((state: RootState) => state.filters.filters);
+  const products = useSelector((state: RootState) => state.products.products);
 
-  const { categories, categoryId, priceRange, limit, offset } = useSelector(
+  const { limit, offset, filterOrderBy, categoryId } = useSelector(
     (state: RootState) => {
       return {
-        categories: state.categories.categories,
-        categoryId: state.filters.filters.categoryId,
-        priceRange: state.filters.filters.priceRange,
         limit: state.filters.filters.limit,
         offset: state.filters.filters.offset,
+        filterOrderBy: state.filters.filters.orderBy,
+        categoryId: state.filters.filters.categoryId,
       };
     }
   );
 
-  const [currentPage, setCurrentPage] = useState(offset / 30 + 1);
+  const [currentPage, setCurrentPage] = useState(offset / 24 + 1);
 
   // Ensure products is an array before proceeding
   if (!Array.isArray(products)) {
     return <div>No products to display</div>;
-  }
-
-  // Define the number of cards to show in each row
-  const numCardsPerRow = 3;
-
-  const cardRows = [];
-  for (let i = 0; i < products.length; i += numCardsPerRow) {
-    const row = products.slice(i, i + numCardsPerRow);
-    cardRows.push(
-      <div key={i} className="flex flex-wrap justify-center gap-4">
-        {row.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    );
   }
 
   const goPrevious = async () => {
@@ -68,40 +53,78 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   };
 
   const goNext = async () => {
-    if (currentPage < 3) {
-      setCurrentPage(currentPage + 1);
-      await store.dispatch(
-        filterSlice.actions.updateFilter({
-          filters: {
-            ...filters,
-            offset: currentPage * limit,
-          },
-        })
-      );
-      await store.dispatch(fetchAllProducts());
+    setCurrentPage(currentPage + 1);
+    await store.dispatch(
+      filterSlice.actions.updateFilter({
+        filters: {
+          ...filters,
+          offset: currentPage * limit,
+        },
+      })
+    );
+    await store.dispatch(fetchAllProducts());
+  };
+
+  const sortProduct = (a: Product, b: Product) => {
+    switch (filterOrderBy) {
+      case "ACS":
+        return a.price - b.price;
+      case "DECS":
+        return b.price - a.price;
+      default:
+        return 0;
     }
   };
 
   return (
     <div className="product-list">
-      <div className="flex flex-wrap">{cardRows}</div>
-
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious onClick={goPrevious} />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink>{currentPage}</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext onClick={goNext} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {!categoryId && (
+        <Pagination className="mt-10">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={goPrevious} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink>{currentPage}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext onClick={goNext} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+      <div className="flex flex-wrap">
+        {[...products].sort(sortProduct).map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            price={product.price}
+            title={product.title}
+            images={product.images}
+          />
+        ))}
+      </div>
+      {!categoryId && (
+        <Pagination className="my-4">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={goPrevious} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink>{currentPage}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext onClick={goNext} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 };

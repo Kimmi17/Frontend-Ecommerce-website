@@ -13,14 +13,12 @@ export const fetchAllProducts = createAsyncThunk(
     const filters = store.getState().filters.filters;
     let filterParams = ``;
 
-    // if (filters.priceRange) {
-    //   filterParams += `?price_min=${filters.priceRange[0]}&price_max=${filters.priceRange[1]}`;
-    // }
     if (filters.categoryId !== null) {
       filterParams += `?categoryId=${filters.categoryId}`;
+    } else {
+      filterParams += `?offset=${filters.offset}&limit=${filters.limit}`;
     }
 
-    // filterParams += `?offset=${filters.offset}&limit=${filters.limit}`;
     try {
       const response = await axios.get<Product[]>(url + filterParams);
       return response.data;

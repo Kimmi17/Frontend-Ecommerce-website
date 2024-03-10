@@ -9,7 +9,6 @@ const filterSlice = createSlice({
   reducers: {
     updateFilter: (state, action: PayloadAction<FilterState>) => {
       state.filters = action.payload.filters;
-      // store.dispatch(fetchAllProducts());
     },
   },
 });
