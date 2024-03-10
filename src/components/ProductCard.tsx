@@ -5,14 +5,19 @@ import store from "../redux/store";
 import cartSlice from "../redux/slices/cartSlice";
 import { toast } from "./ui/use-toast";
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  id,
+  price,
+  title,
+  images,
+}) => {
   const user = store.getState().user.currentUser;
   const isAdmin = user?.role === "admin";
   const addProductToCart = () => {
-    store.dispatch(cartSlice.actions.addProductsToCart(product));
+    store.dispatch(cartSlice.actions.addProductsToCart(id));
     toast({
       title: "Added to cart",
-      description: `${product.title} has been added to your cart`,
+      description: `${title} has been added to your cart`,
       duration: 3000,
     });
   };
@@ -20,20 +25,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="w-full sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
       <div className="border rounded-lg p-4 h-full font-serif">
-        <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
 
         <img
-          src={product.images[0]}
-          alt={product.title}
+          src={images[0]}
+          alt={title}
           className="mb-2"
           style={{ width: "100%", height: "auto" }}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = "https://via.placeholder.com/300";
+          }}
         />
         <p className="mb-1">
           <span className="font-semibold">Price:</span>{" "}
-          <span style={{ color: "red" }}>${product.price}</span>
+          <span style={{ color: "red" }}>${price}</span>
         </p>
         <Link
-          to={`/products/${product.id}`}
+          to={`/products/${id}`}
           className="text-black font-semibold font-serif py-2 px-4 rounded-lg inline-block mt-2"
         >
           View Detail

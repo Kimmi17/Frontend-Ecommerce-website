@@ -18,7 +18,10 @@ export interface Product {
 }
 
 export interface ProductCardProps {
-  product: Product;
+  id: number;
+  title: string;
+  images: string[];
+  price: number;
 }
 
 export interface ProductListProps {
@@ -26,7 +29,9 @@ export interface ProductListProps {
 }
 
 export interface CategoryCardProps {
-  category: Category;
+  id: number;
+  image: string[];
+  name: string;
   onClick?: () => void;
 }
 

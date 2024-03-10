@@ -7,7 +7,6 @@ import FilterForm from "./FilterForm";
 
 const Product = () => {
   const dispatch = store.dispatch;
-  const products = useSelector((state: RootState) => state.products.products);
   const loading = useSelector((state: RootState) => state.products.loading);
   const error = useSelector((state: RootState) => state.products.error);
 
@@ -21,7 +20,7 @@ const Product = () => {
   return (
     <div>
       <FilterForm />
-      <ProductList products={products} />
+      <ProductList />
     </div>
   );
 };
