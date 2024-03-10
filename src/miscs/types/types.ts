@@ -1,7 +1,7 @@
 export interface Category {
   id: number;
   name: string;
-  image: string[];
+  image: string;
   creationAt: string;
   updatedAt: string;
 }
@@ -30,7 +30,7 @@ export interface ProductListProps {
 
 export interface CategoryCardProps {
   id: number;
-  image: string[];
+  image: string;
   name: string;
   onClick?: () => void;
 }

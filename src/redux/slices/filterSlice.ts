@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { FilterState, initialState } from "../../miscs/types/FilterState";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
@@ -16,5 +16,10 @@ const filterSlice = createSlice({
 export const filterReducer = filterSlice.reducer;
 
 export const Filters = (state: RootState) => state.filters.filters;
+
+export const getFiltersState = createSelector(
+  (state: RootState) => state,
+  ({ filters }) => filters
+);
 
 export default filterSlice;

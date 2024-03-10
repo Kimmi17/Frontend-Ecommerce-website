@@ -7,7 +7,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
   description,
 }) => {
   return (
-    <div className="flex gap-2 bg-gray-100 px-4 py-6">
+    <div className="flex gap-2 bg-gray-100 px-4 py-6 dark:text-white dark:opacity-80 dark:bg-slate-400 rounded-xl">
       <div style={{ fontSize: "24px" }}>{icon}</div>
       <div>
         <h2 className="font-medium text-1">{title}</h2>

@@ -49,14 +49,14 @@ const FilterForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md">
+    <div className="flex items-center justify-center dark:bg-slate-800">
+      <div className="p-8 rounded-xl shadow-md dark:bg-slate-500">
         <div className="flex gap-4 items-center">
           <h2 className="text-2xl font-semibold mb-4 mr-4">Filter Products</h2>
           <div className="mb-4">
             <label
               htmlFor="orderBy"
-              className="block text-gray-700 font-semibold"
+              className="block text-gray-700 font-semibold dark:text-white dark:opacity-70"
             >
               Order By
             </label>
@@ -64,7 +64,7 @@ const FilterForm: React.FC = () => {
               id="orderBy"
               value={orderBy || ""}
               onChange={handleOrderByChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              className="mt-1 px-4 py-2 block w-full border rounded"
             >
               <option value="">Default</option>
               <option value="ACS">Ascending</option>
@@ -74,7 +74,7 @@ const FilterForm: React.FC = () => {
           <div className="mb-4">
             <label
               htmlFor="category"
-              className="block text-gray-700 font-semibold"
+              className="block text-gray-700 font-semibold dark:text-white dark:opacity-70"
             >
               Category
             </label>
@@ -83,7 +83,7 @@ const FilterForm: React.FC = () => {
               name="category"
               value={categoryId}
               onChange={handleCategoryChange}
-              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              className="mt-1 px-4 py-2 block w-full border rounded"
               required
             >
               <option value={0}>All</option>

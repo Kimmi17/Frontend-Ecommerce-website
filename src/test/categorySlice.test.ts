@@ -12,14 +12,14 @@ const mockCategories: Category[] = [
     name: "Electronics",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image1.jpg"],
+    image: "image1.jpg",
   },
   {
     id: 2,
     name: "Electronics",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image1.jpg"],
+    image: "image1.jpg",
   },
 ];
 const mockProducts: Product[] = [
@@ -33,7 +33,7 @@ const mockProducts: Product[] = [
       name: "Electronics",
       creationAt: "2024-03-08",
       updatedAt: "2024-03-08",
-      image: ["image1.jpg"],
+      image: "image1.jpg",
     },
     images: ["img1.jpg"],
     creationAt: "2024-03-08",
@@ -50,7 +50,7 @@ const mockProducts: Product[] = [
       name: "Electronics",
       creationAt: "2024-03-08",
       updatedAt: "2024-03-08",
-      image: ["image1.jpg"],
+      image: "image1.jpg",
     },
     images: ["img1.jpg"],
     creationAt: "2024-03-08",
@@ -100,10 +100,9 @@ describe("categorySlice", () => {
     expect(received).toEqual(expected);
   });
 
-  // Test fetchProductsByCategory thunk (similar to fetchCategories)
   test("fetchProductsByCategory pending sets loading to true and error to null", () => {
     const state = initialState;
-    const expected = { ...state, loading: true, error: null, products: [] }; // Set products to empty array initially
+    const expected = { ...state, loading: true, error: null, products: [] };
     const received = categorySlice.reducer(state, {
       type: fetchProductsByCategory.pending.type,
     });

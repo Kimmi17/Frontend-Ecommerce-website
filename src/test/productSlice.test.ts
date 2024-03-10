@@ -15,7 +15,7 @@ const mockProduct1: Product = {
     name: "Electronics",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image1.jpg"],
+    image: "image1.jpg",
   },
   images: ["img1.jpg"],
   creationAt: "2024-03-08",
@@ -31,7 +31,7 @@ const mockProduct2: Product = {
     name: "Clothing",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image2.jpg", "image3.jpg"],
+    image: "image2.jpg",
   },
   images: ["img2.jpg", "img3.jpg"],
   creationAt: "2024-03-08",
@@ -96,8 +96,6 @@ describe("productSlice", () => {
     });
     expect(received).toEqual(expected);
   });
-
-  // Test fetchProductById extraReducers (similar to fetchAllProducts)
 
   // pending
   // eslint-disable-next-line jest/no-identical-title

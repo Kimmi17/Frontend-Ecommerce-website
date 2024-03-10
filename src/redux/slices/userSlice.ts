@@ -33,6 +33,7 @@ export const loginUser = createAsyncThunk(
       toast({
         title: "Login successful",
         description: `Welcome back, ${user?.email}`,
+        duration: 2000,
       });
       return user;
     } catch (error) {

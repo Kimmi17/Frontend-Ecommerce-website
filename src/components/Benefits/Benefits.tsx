@@ -40,18 +40,18 @@ const Benefits: React.FC = () => {
   ];
 
   return (
-    <div className="container mt-8 flex justify-center">
-      <h2 className="text-3xl font-bold mb-4 text-gray-900">
+    <div className="container mt-8 flex justify-center flex-col px-8">
+      <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white dark:opacity-80">
         Our Promises to You
       </h2>
-      <div className="grid gap-1 sm:grid-col-2 lg:grid-cols-4">
+      <div className="grid gap-2 sm:grid-col-2 lg:grid-cols-4">
         {data.map((item, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="w-full flex justify-center" // Apply flexbox properties
+            className="w-full flex justify-center"
           >
             <BenefitCard
               icon={item.icon}

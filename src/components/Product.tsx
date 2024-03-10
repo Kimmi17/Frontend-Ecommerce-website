@@ -18,7 +18,7 @@ const Product = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className="mt-[60px]">
       <FilterForm />
       <ProductList />
     </div>

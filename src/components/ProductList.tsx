@@ -80,7 +80,7 @@ const ProductList: React.FC = () => {
   };
 
   return (
-    <div className="product-list">
+    <div className="product-list px-8">
       {!categoryId && (
         <Pagination className="mt-10">
           <PaginationContent>

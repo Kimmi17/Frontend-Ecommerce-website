@@ -5,7 +5,7 @@ import Slider from "../components/Slider";
 
 const HomePage = () => {
   return (
-    <div className="product-list">
+    <div className="product-list dark:bg-slate-800">
       <Slider />
       <Benefits />
       <div style={{ marginTop: "20px" }} />

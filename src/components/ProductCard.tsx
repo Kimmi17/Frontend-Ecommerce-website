@@ -4,6 +4,7 @@ import { ProductCardProps } from "../miscs/types/types";
 import store from "../redux/store";
 import cartSlice from "../redux/slices/cartSlice";
 import { toast } from "./ui/use-toast";
+import { extractUrlFromString } from "../lib/utils";
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
@@ -11,6 +12,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   title,
   images,
 }) => {
+  console.log(">>>", images);
   const user = store.getState().user.currentUser;
   const isAdmin = user?.role === "admin";
   const addProductToCart = () => {
@@ -28,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
 
         <img
-          src={images[0]}
+          src={extractUrlFromString(images[0])}
           alt={title}
           className="mb-2"
           style={{ width: "100%", height: "auto" }}

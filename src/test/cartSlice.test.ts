@@ -15,7 +15,7 @@ const mockProduct1: Product = {
     name: "Electronics",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image1.jpg"],
+    image: "image1.jpg",
   },
   // quantity: 1,
   images: ["img1.jpg"],
@@ -32,7 +32,7 @@ const mockProduct2: Product = {
     name: "Clothing",
     creationAt: "2024-03-08",
     updatedAt: "2024-03-08",
-    image: ["image2.jpg", "image3.jpg"],
+    image: "image2.jpg",
   },
   // quantity: 1,
   images: ["img2.jpg", "img3.jpg"],
@@ -50,18 +50,27 @@ describe("cartSlice", () => {
 
   // Test addProductsToCart reducer
   test("should add a new product to the cart", () => {
-    const expected = { products: [mockProduct1] };
+    const expected = { products: [{ ...mockProduct1, quantity: 1 }] };
     const received = cartSlice.reducer(
       initialState,
-      addProductsToCart(mockProduct1)
+      addProductsToCart(mockProduct1.id)
     );
     expect(received).toEqual(expected);
   });
 
-  // Test removeProductsToCart reducer
   test("should decrement quantity for existing product", () => {
-    const existingState = { products: [{ ...mockProduct1, quantity: 2 }] };
-    const expected = { products: [{ ...mockProduct1, quantity: 1 }] };
+    const existingState = {
+      products: [{ ...mockProduct1, quantity: 2 }],
+      productData: [],
+      loading: false,
+      error: null,
+    };
+    const expected = {
+      products: [{ ...mockProduct1, quantity: 1 }],
+      productData: [],
+      loading: false,
+      error: null,
+    };
     const received = cartSlice.reducer(
       existingState,
       removeProductsToCart(mockProduct1.id)
@@ -70,8 +79,21 @@ describe("cartSlice", () => {
   });
 
   test("should remove product from cart if quantity reaches 0", () => {
-    const existingState = { products: [{ ...mockProduct1, quantity: 1 }] };
-    const expected = { products: [] };
+    const existingState = {
+      products: [
+        { ...mockProduct1, quantity: 1 },
+        { ...mockProduct2, quantity: 2 },
+      ],
+      productData: [],
+      loading: false,
+      error: null,
+    };
+    const expected = {
+      products: [{ ...mockProduct2, quantity: 2 }],
+      productData: [],
+      loading: false,
+      error: null,
+    };
     const received = cartSlice.reducer(
       existingState,
       removeProductsToCart(mockProduct1.id)

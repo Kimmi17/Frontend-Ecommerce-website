@@ -55,12 +55,12 @@ const ProductsPage = () => {
   };
   return (
     <div>
-      <div className="flex mr-2 my-2 gap-4 justify-end">
+      <div className="flex pr-2 py-2 gap-4 justify-end dark:bg-slate-800">
         <Input
           type="text"
           placeholder="Search product by title"
           onChange={(e) => setkeyword(e.target.value)}
-          className="rounded max-w-[200px] md:max-w-[320px]"
+          className="rounded max-w-[200px] md:max-w-[320px] dark:bg-gray-200"
         />
 
         <Dialog>

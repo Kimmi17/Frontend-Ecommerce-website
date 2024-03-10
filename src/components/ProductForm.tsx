@@ -22,7 +22,7 @@ const initialProduct: Product = {
   category: {
     id: 0,
     name: "",
-    image: [],
+    image: "",
     creationAt: "",
     updatedAt: "",
   },

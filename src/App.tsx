@@ -16,6 +16,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import ProductsPage from "./pages/ProductsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
+import { getUserByToken } from "./redux/slices/userSlice";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +24,10 @@ const App: React.FC = () => {
   const { dispatch } = store;
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      dispatch(getUserByToken());
+    }
     dispatch(fetchCategories());
   }, [dispatch]);
 
@@ -30,31 +35,32 @@ const App: React.FC = () => {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <BrowserRouter>
         <Navbar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/categories/:categoryName"
-            element={<CategoryProductsPage />}
-          />
-          <Route path="/products/:id" element={<ProductDetailsPage />} />
-          <Route path="/admin-products" element={<ProductsPage />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="category" element={<Outlet />}>
-            <Route path={":categoryId"} element={<CategoryProductsPage />} />
-          </Route>
-        </Routes>
-        <div className="h-[100px]" />
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/categories/:categoryName"
+              element={<CategoryProductsPage />}
+            />
+            <Route path="/products/:id" element={<ProductDetailsPage />} />
+            <Route path="/admin-products" element={<ProductsPage />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="category" element={<Outlet />}>
+              <Route path={":categoryId"} element={<CategoryProductsPage />} />
+            </Route>
+          </Routes>
+        </div>
         <Footer />
         <ScrollToTopButton />
       </BrowserRouter>

@@ -22,12 +22,16 @@ const Category = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold mb-4 text-gray-900">Categories</h2>
+    <div className="mx-8">
+      <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white opacity-85">
+        Categories
+      </h2>
       <div className="flex flex-wrap">
-        {categories.map((c) => (
-          <CategoryCard key={c.id} id={c.id} name={c.name} image={c.image} />
-        ))}
+        {categories
+          .filter((c) => c.id <= 5)
+          .map((c) => (
+            <CategoryCard key={c.id} id={c.id} name={c.name} image={c.image} />
+          ))}
       </div>
     </div>
   );
