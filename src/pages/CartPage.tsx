@@ -78,12 +78,6 @@ const CartPage: React.FC = () => {
                 <TableCell>$ {p.price * p.quantity}</TableCell>
                 <TableCell>
                   <Button
-                    className="mr-2 bg-red-500 hover:bg-red-600 text-white"
-                    onClick={() => handleRemove(p.id)}
-                  >
-                    Remove
-                  </Button>
-                  <Button
                     className="mr-2 bg-green-500 hover:bg-green-600 text-white"
                     onClick={() => handleIncrease(p)}
                   >
@@ -94,6 +88,12 @@ const CartPage: React.FC = () => {
                     onClick={() => handleDecrease(p.id)}
                   >
                     -
+                  </Button>
+                  <Button
+                    className="mr-2 bg-red-500 hover:bg-red-600 text-white"
+                    onClick={() => handleRemove(p.id)}
+                  >
+                    Remove
                   </Button>
                 </TableCell>
               </TableRow>

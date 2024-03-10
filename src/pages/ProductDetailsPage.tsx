@@ -44,7 +44,6 @@ const ProductsDetailPage: React.FC = () => {
         price,
       });
 
-      // Assuming successful update, you can redirect or perform any other action
       console.log("Product updated successfully");
     } catch (error) {
       console.error(error);
@@ -69,8 +68,14 @@ const ProductsDetailPage: React.FC = () => {
   return (
     <>
       {selectedProduct && (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl">
+        <div
+          className="bg-gray-100 min-h-screen flex items-center justify-center"
+          style={{
+            backgroundImage:
+              "url('https://images.pexels.com/photos/7123111/pexels-photo-7123111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
+          }}
+        >
+          <div className="bg-white p-8 rounded-xl shadow-md max-w-4xl">
             <h2 className="text-3xl font-semibold mb-4">
               {selectedProduct.title}
             </h2>
@@ -81,21 +86,21 @@ const ProductsDetailPage: React.FC = () => {
                     key={index}
                     src={image}
                     alt={selectedProduct.title}
-                    className="w-1/2 h-auto rounded-lg"
+                    className="w-1/2 h-auto rounded-xl"
                   />
                 ))}
               </div>
               <div className="w-full md:w-1/2">
-                <p className="text-lg font-semibold mb-2">
+                <p className="text-lg text-gray-700 font-semibold mb-2">
                   Price: ${selectedProduct.price}
                 </p>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-700 mb-4">
                   {selectedProduct.description}
                 </p>
-                <p className="text-gray-700">
+                <p className="text-gray-700 font-semibold mt-2 mb-2">
                   Category: {selectedProduct.category.name}
                 </p>
-                <div className="text-gray-600 text-sm">
+                <div className="text-gray-700 text-sm">
                   <p>
                     Created at:{" "}
                     {new Date(selectedProduct.creationAt).toLocaleString()}
@@ -107,7 +112,7 @@ const ProductsDetailPage: React.FC = () => {
                   {!isAdmin && (
                     <Button
                       onClick={addProductToCart}
-                      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                      className="bg-blue-600 hover:bg-blue-200 text-white font-bold py-2 px-4 mt-2 rounded"
                     >
                       Add to cart
                     </Button>

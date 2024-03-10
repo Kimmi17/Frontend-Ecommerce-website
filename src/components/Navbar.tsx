@@ -15,7 +15,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
   );
 
   return (
-    <nav className="navbar p-8 bg-gray-100 dark:bg-slate-800">
+    <nav className="navbar p-8 bg-gray-200 dark:bg-slate-800">
       {/* Section 1: Logo, Icons */}
       <div className="flex flex-col md:flex-row items-center justify-between my-4">
         <div className="flex items-center md:mb-0 dark:bg-gray-200 rounded">
@@ -29,7 +29,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
             <div className="relative">
               <AiOutlineShoppingCart
                 size={24}
-                className="text-gray-500 dark:text-white opacity-85"
+                className="text-dark-500 dark:text-white opacity-85"
               />
               {cartProducts.length > 0 && (
                 <div className="absolute top-0 right-0 bg-red-500 w-3 h-3 rounded-full"></div>
@@ -45,14 +45,20 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
 
       {/* Section 2: Navigation Links */}
       <div className="flex justify-center md:justify-end">
-        <ul className="navbar-nav flex dark:text-white opacity-80">
+        <ul className="navbar-nav flex dark:text-gray-900 opacity-80">
           <li className="mr-4">
-            <Link to="/" className="text-lg hover:text-gray-700">
+            <Link
+              to="/"
+              className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
+            >
               Home
             </Link>
           </li>
           <li className="mr-4">
-            <Link to="/about" className="text-lg hover:text-gray-700">
+            <Link
+              to="/about"
+              className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
+            >
               About
             </Link>
           </li>
@@ -60,7 +66,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
             <li className="mr-4">
               <Link
                 to="/admin-products"
-                className="text-lg hover:text-gray-700"
+                className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
               >
                 Products
               </Link>
@@ -68,7 +74,10 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
           )}
 
           <li>
-            <Link to="/contact" className="text-lg hover:text-gray-700">
+            <Link
+              to="/contact"
+              className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
+            >
               Contact Us
             </Link>
           </li>

@@ -52,7 +52,9 @@ const FilterForm: React.FC = () => {
     <div className="flex items-center justify-center dark:bg-slate-800">
       <div className="p-8 rounded-xl shadow-md dark:bg-slate-500">
         <div className="flex gap-4 items-center">
-          <h2 className="text-2xl font-semibold mb-4 mr-4">Filter Products</h2>
+          <h2 className="text-2xl font-semibold dark:text-gray-300 mb-4 mr-4">
+            Filter Products
+          </h2>
           <div className="mb-4">
             <label
               htmlFor="orderBy"

@@ -35,15 +35,16 @@ const Slider: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center transition-opacity duration-500 ease-in-out opacity-100">
-        <h2 className="text-white text-4xl font-bold mb-4">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center">
+        <h2 className="text-white text-4xl font-bold mb-4 animate-text-running">
           Welcome to Vascara
         </h2>
-        <p className="text-white mb-6">
+        <p className="text-white mb-6 animate-text-running">
           Discover the latest trends in summer fashion. Elevate your style with
           Vascara's exclusive collection.
         </p>
       </div>
+
       <div className="icons absolute bottom-10 left-0 right-0 mx-auto flex justify-center">
         <div
           className="icon bg-white p-2 rounded-full shadow-md cursor-pointer"
