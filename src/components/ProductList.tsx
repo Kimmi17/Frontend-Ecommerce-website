@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Product, ProductListProps } from "../miscs/types/types";
+import { Product } from "../miscs/types/types";
 import ProductCard from "./ProductCard";
 import {
   Pagination,
@@ -12,11 +12,14 @@ import {
 } from "./ui/pagination";
 import { useSelector } from "react-redux";
 import store, { RootState } from "../redux/store";
-import filterSlice from "../redux/slices/filterSlice";
+import filterSlice, { getFiltersState } from "../redux/slices/filterSlice";
 import { fetchAllProducts } from "../redux/slices/productSlice";
 
 const ProductList: React.FC = () => {
-  const filters = useSelector((state: RootState) => state.filters.filters);
+  const filters = useSelector(
+    (state: RootState) => getFiltersState(state).filters
+  );
+
   const products = useSelector((state: RootState) => state.products.products);
 
   const { limit, offset, filterOrderBy, categoryId } = useSelector(
