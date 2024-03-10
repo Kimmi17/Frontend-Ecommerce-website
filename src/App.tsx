@@ -12,6 +12,10 @@ import { fetchCategories } from "./redux/slices/categorySlice";
 import AboutPage from "./pages/AboutPage";
 import Footer from "./components/Footer";
 import ScrollToTopButton from "./components/ScrollToTopBottom";
+import { ThemeProvider } from "./components/theme-provider";
+import ProductsPage from "./pages/ProductsPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,27 +27,38 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
-      <Navbar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/categories/:categoryName"
-          element={<CategoryProductsPage />}
-        />
-        <Route path="/products/:id" element={<ProductDetailsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="category" element={<Outlet />}>
-          <Route path={":categoryId"} element={<CategoryProductsPage />} />
-        </Route>
-      </Routes>
-      <div className="h-[100px]" />
-      <Footer />
-      <ScrollToTopButton />
-    </BrowserRouter>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <BrowserRouter>
+        <Navbar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/categories/:categoryName"
+            element={<CategoryProductsPage />}
+          />
+          <Route path="/products/:id" element={<ProductDetailsPage />} />
+          <Route path="/admin-products" element={<ProductsPage />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="category" element={<Outlet />}>
+            <Route path={":categoryId"} element={<CategoryProductsPage />} />
+          </Route>
+        </Routes>
+        <div className="h-[100px]" />
+        <Footer />
+        <ScrollToTopButton />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

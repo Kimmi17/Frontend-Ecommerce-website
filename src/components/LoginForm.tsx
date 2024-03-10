@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import store from "../redux/store";
 import { loginUser } from "../redux/slices/userSlice";
+import { Navigate } from "react-router-dom";
 
 const LoginForm: React.FC<{
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,6 +43,7 @@ const LoginForm: React.FC<{
     try {
       dispatch(loginUser({ email, password }));
       console.log("Login successful");
+      return <Navigate to="/profile" replace />;
     } catch (error) {
       console.error("Error logging in:", error);
     }

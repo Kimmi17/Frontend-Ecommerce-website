@@ -1,18 +1,16 @@
 import React from "react";
-import AuthModal from "../components/AuthModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import UserInfo from "../components/UserInfo";
+import { Navigate } from "react-router-dom";
 
 const Profile = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
-  return (
-    <div>
-      {!currentUser && <AuthModal />}
-      {currentUser && <UserInfo user={currentUser} />}
-    </div>
-  );
+  if (!currentUser) {
+    return <Navigate to="/" replace />;
+  }
+  return <UserInfo user={currentUser} />;
 };
 
 export default Profile;
