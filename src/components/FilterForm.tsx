@@ -7,15 +7,13 @@ import { OrderBy } from "../miscs/types/FilterState";
 
 const FilterForm: React.FC = () => {
   const { categories, filterCategoryId, filterOrderBy, limit, offset } =
-    useSelector((state: RootState) => {
-      return {
-        categories: state.categories.categories,
-        filterCategoryId: state.filters.filters.categoryId,
-        filterOrderBy: state.filters.filters.orderBy,
-        limit: state.filters.filters.limit,
-        offset: state.filters.filters.offset,
-      };
-    });
+    useSelector((state: RootState) => ({
+      categories: state.categories.categories,
+      filterCategoryId: state.filters.filters.categoryId,
+      filterOrderBy: state.filters.filters.orderBy,
+      limit: state.filters.filters.limit,
+      offset: state.filters.filters.offset,
+    }));
 
   const [categoryId, setCategoryId] = useState(filterCategoryId || 0);
   const [orderBy, setOrderBy] = useState(filterOrderBy);
@@ -56,7 +54,6 @@ const FilterForm: React.FC = () => {
         <div className="flex gap-4 items-center">
           <h2 className="text-2xl font-semibold mb-4 mr-4">Filter Products</h2>
           <div className="mb-4">
-            {" "}
             <label
               htmlFor="orderBy"
               className="block text-gray-700 font-semibold"
