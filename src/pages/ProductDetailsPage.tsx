@@ -84,12 +84,14 @@ const ProductsDetailPage: React.FC = () => {
   }
 
   const addProductToCart = () => {
-    store.dispatch(cartSlice.actions.addProductsToCart(selectedProduct));
-    toast({
-      title: "Added to cart",
-      description: `${selectedProduct.title} has been added to your cart`,
-      duration: 3000,
-    });
+    if (id) {
+      store.dispatch(cartSlice.actions.addProductsToCart(parseInt(id)));
+      toast({
+        title: "Added to cart",
+        description: `${selectedProduct.title} has been added to your cart`,
+        duration: 3000,
+      });
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   Table,
@@ -11,16 +11,19 @@ import {
   TableRow,
 } from "../components/ui/table";
 import { Button } from "../components/ui/button";
-import { RootState } from "../redux/store";
+import store, { RootState } from "../redux/store";
 import {
   addProductsToCart,
+  fetchProductsByIds,
   removeProductsToCart,
 } from "../redux/slices/cartSlice";
 import { Product } from "../miscs/types/types";
 
 const CartPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const cartProducts = useSelector((state: RootState) => state.cart.products);
+  const dispatch = store.dispatch;
+  const cartProducts = useSelector(
+    (state: RootState) => state.cart.productData
+  );
 
   const [toastMessage, setToastMessage] = useState<string>("");
 
@@ -29,7 +32,7 @@ const CartPage: React.FC = () => {
   };
 
   const handleIncrease = (p: Product) => {
-    dispatch(addProductsToCart(p));
+    dispatch(addProductsToCart(p.id));
   };
 
   const handleDecrease = (productId: number) => {
@@ -42,6 +45,10 @@ const CartPage: React.FC = () => {
       setToastMessage(""); // Clearing the toast message after a certain time
     }, 3000); // Adjust the duration as needed
   };
+
+  useEffect(() => {
+    dispatch(fetchProductsByIds());
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center">
