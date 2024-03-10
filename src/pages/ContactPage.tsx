@@ -19,7 +19,7 @@ const ContactUsPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 min-h-[70vh]">
       <div className="flex justify-between">
         {/* Contact information */}
         <div className="w-1/2 pr-4">
