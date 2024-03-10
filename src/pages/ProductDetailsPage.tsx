@@ -5,36 +5,8 @@ import store, { RootState } from "../redux/store";
 import { fetchProductById } from "../redux/slices/productSlice";
 import { useSelector } from "react-redux";
 import cartSlice from "../redux/slices/cartSlice";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../components/ui/dialog";
-import ProductForm from "../components/ProductForm";
-import { Pencil2Icon } from "@radix-ui/react-icons";
 import { Button } from "../components/ui/button";
 import { toast } from "../components/ui/use-toast";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-  };
-  images: string[];
-}
-
-interface UpdateProductProps {
-  productId: number;
-}
 
 const ProductsDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -132,23 +104,7 @@ const ProductsDetailPage: React.FC = () => {
                     Updated at:{" "}
                     {new Date(selectedProduct.updatedAt).toLocaleString()}
                   </p>
-                  {isAdmin ? (
-                    <Dialog>
-                      <DialogTrigger>
-                        <Button>
-                          Edit Product <Pencil2Icon className="mx-2 h-4 w-4" />
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="bg-white">
-                        <DialogHeader>
-                          <DialogTitle>Edit Product</DialogTitle>
-                          <DialogDescription>
-                            <ProductForm product={selectedProduct} />
-                          </DialogDescription>
-                        </DialogHeader>
-                      </DialogContent>
-                    </Dialog>
-                  ) : (
+                  {!isAdmin && (
                     <Button
                       onClick={addProductToCart}
                       className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"

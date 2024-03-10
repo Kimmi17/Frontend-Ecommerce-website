@@ -28,6 +28,42 @@ export const fetchAllProducts = createAsyncThunk(
   }
 );
 
+export const fetchAllProductsForAdmin = createAsyncThunk(
+  "fetchAllProductsForAdmin",
+  async () => {
+    try {
+      const response = await axios.get<Product[]>(url);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching products");
+    }
+  }
+);
+
+export const deleteProductById = createAsyncThunk(
+  "deleteProductById",
+  async (id: number) => {
+    try {
+      const response = await axios.delete<Product[]>(`${url}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error deleting product with id: " + id);
+    }
+  }
+);
+
+export const searchProductsByTitle = createAsyncThunk(
+  "searchProductsByTitle",
+  async (keyword: string) => {
+    try {
+      const response = await axios.get<Product[]>(`${url}/?title=${keyword}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching products");
+    }
+  }
+);
+
 export const fetchProductById = createAsyncThunk(
   "fetchProductById",
   async (productId: string) => {
@@ -50,6 +86,17 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(deleteProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProductById.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Error fetching products";
+      })
       .addCase(fetchAllProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -73,6 +120,32 @@ const productSlice = createSlice({
       .addCase(fetchProductById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Error fetching product by ID";
+      })
+      .addCase(searchProductsByTitle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchProductsByTitle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productsForAdmin = action.payload;
+      })
+      .addCase(searchProductsByTitle.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || "Error searching product by title";
+      })
+      .addCase(fetchAllProductsForAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllProductsForAdmin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productsForAdmin = action.payload;
+      })
+      .addCase(fetchAllProductsForAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || "Error fetching products for admin";
       });
   },
 });
