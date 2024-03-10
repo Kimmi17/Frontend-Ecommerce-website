@@ -23,7 +23,13 @@ const CategoryProductsPage = (props: Props) => {
   return (
     <div className="flex flex-wrap">
       {products.map((p) => (
-        <ProductCard product={p} />
+        <ProductCard
+          key={p.id}
+          id={p.id}
+          title={p.title}
+          price={p.price}
+          images={p.images}
+        />
       ))}
     </div>
   );
