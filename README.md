@@ -16,8 +16,8 @@ To get started with the Vascara Website project, follow these steps:
 
 1. Clone the repository: `git@github.com:Kimmi17/fs17-Frontend-project.git `
 2. Navigate to the project directory: `cd vascara-website`
-3. Install dependencies: `npm install`
-4. Run: `npm start`
+3. Install dependencies: `npm install` or `yarn install`
+4. Run the app locally: `npm start`or `yarn start`
 
 ### yarn users
 
