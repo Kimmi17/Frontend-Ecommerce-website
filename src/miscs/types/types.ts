@@ -1,26 +1,28 @@
 export interface Category {
-  id: number;
+  _id: string;
   name: string;
   image: string;
-  creationAt: string;
-  updatedAt: string;
 }
 
 export interface Product {
-  id: number;
+  _id: string;
   title: string;
   price: number;
+  skinType: string;
   description: string;
-  images: string[];
-  creationAt: string;
-  updatedAt: string;
-  category: Category;
+  image: string[];
+  categoryId: Category;
+}
+
+export interface ProductResponse {
+  totalProduct: number;
+  products: Product[];
 }
 
 export interface ProductCardProps {
-  id: number;
+  id: string;
   title: string;
-  images: string[];
+  image: string[];
   price: number;
 }
 
@@ -29,7 +31,7 @@ export interface ProductListProps {
 }
 
 export interface CategoryCardProps {
-  id: number;
+  id: string;
   image: string;
   name: string;
   onClick?: () => void;

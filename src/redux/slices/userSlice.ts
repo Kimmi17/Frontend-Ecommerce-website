@@ -4,7 +4,7 @@ import { LoginFormValues, RegisterFormValues } from "../../miscs/types/types";
 import { User, initialState } from "../../miscs/types/UserState";
 import { toast } from "../../components/ui/use-toast";
 
-const apiUrl = "https://api.escuelajs.co/api/v1/auth";
+const apiUrl = "https://localhost:8000/api/v1/users/login";
 
 interface AuthResponse {
   access_token: string;

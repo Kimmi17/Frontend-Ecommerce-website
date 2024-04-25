@@ -1,7 +1,7 @@
 import { Product } from "./types";
 
 export interface CartState {
-  products: { id: number; quantity: number }[];
+  products: { id: string; quantity: number }[];
   productData: (Product & {
     quantity: number;
   })[];

@@ -12,7 +12,9 @@ const CategoryProductsPage = (props: Props) => {
 
   const { dispatch } = store;
 
-  const products = useSelector((state: RootState) => state.categories.products);
+  const products = useSelector(
+    (state: RootState) => state.categories.products.products
+  );
 
   useEffect(() => {
     if (categoryId) {
@@ -24,11 +26,11 @@ const CategoryProductsPage = (props: Props) => {
     <div className="flex flex-wrap">
       {products.map((p) => (
         <ProductCard
-          key={p.id}
-          id={p.id}
+          key={p._id}
+          id={p._id}
           title={p.title}
           price={p.price}
-          images={p.images}
+          image={p.image}
         />
       ))}
     </div>

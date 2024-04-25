@@ -27,15 +27,15 @@ const CartPage: React.FC = () => {
 
   const [toastMessage, setToastMessage] = useState<string>("");
 
-  const handleRemove = (productId: number) => {
+  const handleRemove = (productId: string) => {
     dispatch(removeProductsToCart(productId));
   };
 
   const handleIncrease = (p: Product) => {
-    dispatch(addProductsToCart(p.id));
+    dispatch(addProductsToCart(p._id));
   };
 
-  const handleDecrease = (productId: number) => {
+  const handleDecrease = (productId: string) => {
     dispatch(removeProductsToCart(productId));
   };
 
@@ -71,7 +71,7 @@ const CartPage: React.FC = () => {
           </TableHeader>
           <TableBody>
             {cartProducts.map((p) => (
-              <TableRow key={p.id}>
+              <TableRow key={p._id}>
                 <TableCell>{p.title}</TableCell>
                 <TableCell>{p.price}</TableCell>
                 <TableCell>{p.quantity}</TableCell>
@@ -85,13 +85,13 @@ const CartPage: React.FC = () => {
                   </Button>
                   <Button
                     className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                    onClick={() => handleDecrease(p.id)}
+                    onClick={() => handleDecrease(p._id)}
                   >
                     -
                   </Button>
                   <Button
                     className="mr-2 bg-red-500 hover:bg-red-600 text-white"
-                    onClick={() => handleRemove(p.id)}
+                    onClick={() => handleRemove(p._id)}
                   >
                     Remove
                   </Button>

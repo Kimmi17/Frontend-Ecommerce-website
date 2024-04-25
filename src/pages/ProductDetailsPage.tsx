@@ -39,7 +39,7 @@ const ProductsDetailPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`https://api.escuelajs.co/api/v1/products/${id}`, {
+      await axios.put(`http://localhost:8080/api/v1/products/${id}`, {
         title,
         price,
       });
@@ -56,7 +56,7 @@ const ProductsDetailPage: React.FC = () => {
 
   const addProductToCart = () => {
     if (id) {
-      store.dispatch(cartSlice.actions.addProductsToCart(parseInt(id)));
+      store.dispatch(cartSlice.actions.addProductsToCart(id));
       toast({
         title: "Added to cart",
         description: `${selectedProduct.title} has been added to your cart`,
@@ -81,7 +81,7 @@ const ProductsDetailPage: React.FC = () => {
             </h2>
             <div className="flex flex-wrap justify-between mb-4">
               <div className="w-full md:w-1/2 mb-4 md:mb-0 flex flex-wrap">
-                {selectedProduct.images.map((image, index) => (
+                {selectedProduct.image.map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -98,17 +98,9 @@ const ProductsDetailPage: React.FC = () => {
                   {selectedProduct.description}
                 </p>
                 <p className="text-gray-700 font-semibold mt-2 mb-2">
-                  Category: {selectedProduct.category.name}
+                  Category: {selectedProduct.categoryId.name}
                 </p>
                 <div className="text-gray-700 text-sm">
-                  <p>
-                    Created at:{" "}
-                    {new Date(selectedProduct.creationAt).toLocaleString()}
-                  </p>
-                  <p>
-                    Updated at:{" "}
-                    {new Date(selectedProduct.updatedAt).toLocaleString()}
-                  </p>
                   {!isAdmin && (
                     <Button
                       onClick={addProductToCart}

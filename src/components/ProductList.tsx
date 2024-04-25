@@ -20,7 +20,9 @@ const ProductList: React.FC = () => {
     (state: RootState) => getFiltersState(state).filters
   );
 
-  const products = useSelector((state: RootState) => state.products.products);
+  const products = useSelector(
+    (state: RootState) => state.products.products.products
+  );
 
   const { limit, offset, filterOrderBy, categoryId } = useSelector(
     (state: RootState) => {
@@ -35,7 +37,6 @@ const ProductList: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(offset / 24 + 1);
 
-  // Ensure products is an array before proceeding
   if (!Array.isArray(products)) {
     return <div>No products to display</div>;
   }
@@ -102,11 +103,11 @@ const ProductList: React.FC = () => {
       <div className="flex flex-wrap">
         {[...products].sort(sortProduct).map((product) => (
           <ProductCard
-            key={product.id}
-            id={product.id}
+            key={product._id}
+            id={product._id}
             price={product.price}
             title={product.title}
-            images={product.images}
+            image={product.image}
           />
         ))}
       </div>

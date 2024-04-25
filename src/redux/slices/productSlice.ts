@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { Product } from "../../miscs/types/types";
+import { Product, ProductResponse } from "../../miscs/types/types";
 import { initialState } from "../../miscs/types/ProductState";
 import store from "../store";
 
-const url = "https://api.escuelajs.co/api/v1/products";
+const url = "http://localhost:8080/api/v1/products";
 
 export const fetchAllProducts = createAsyncThunk(
   "fetchAllProducts",
@@ -20,7 +20,7 @@ export const fetchAllProducts = createAsyncThunk(
     }
 
     try {
-      const response = await axios.get<Product[]>(url + filterParams);
+      const response = await axios.get<ProductResponse>(url + filterParams);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching products");
@@ -42,7 +42,7 @@ export const fetchAllProductsForAdmin = createAsyncThunk(
 
 export const deleteProductById = createAsyncThunk(
   "deleteProductById",
-  async (id: number) => {
+  async (id: string) => {
     try {
       const response = await axios.delete<Product[]>(`${url}/${id}`);
       return response.data;
