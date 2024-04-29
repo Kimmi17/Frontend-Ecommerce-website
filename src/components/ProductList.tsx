@@ -82,24 +82,22 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="product-list px-8">
-      {!categoryId && (
-        <Pagination className="mt-10">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={goPrevious} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>{currentPage}</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={goNext} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <Pagination className="mt-10">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious onClick={goPrevious} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>{currentPage}</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={goNext} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
       <div className="flex flex-wrap">
         {[...products].sort(sortProduct).map((product) => (
           <ProductCard
@@ -111,24 +109,22 @@ const ProductList: React.FC = () => {
           />
         ))}
       </div>
-      {!categoryId && (
-        <Pagination className="my-4">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={goPrevious} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>{currentPage}</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={goNext} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <Pagination className="my-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious onClick={goPrevious} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>{currentPage}</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={goNext} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };

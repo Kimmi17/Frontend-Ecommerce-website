@@ -1,17 +1,20 @@
 // import { Product } from "./types";
 
-export interface User {
-  id: number;
+export type UserData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  name: string;
+  password: string;
   role: string;
   avatar: string;
-  creationAt: string;
-  updatedAt: string;
-}
+  banStatus: boolean;
+  orders: any;
+};
 
 export interface UserState {
-  currentUser: User | null;
+  currentUser: UserData | null;
+  users: any[];
   token: string | null;
   isLoading: boolean;
   error: string | null;
@@ -19,6 +22,7 @@ export interface UserState {
 
 export const initialState: UserState = {
   currentUser: null,
+  users: [],
   token: null,
   isLoading: false,
   error: null,

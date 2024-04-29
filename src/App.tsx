@@ -17,6 +17,8 @@ import ProductsPage from "./pages/ProductsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 import { getUserByToken } from "./redux/slices/userSlice";
+import OrderSuccess from "./components/OrderSuccess";
+import UsersPage from "./pages/UsersPage";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,6 +46,7 @@ const App: React.FC = () => {
             />
             <Route path="/products/:id" element={<ProductDetailsPage />} />
             <Route path="/admin-products" element={<ProductsPage />} />
+            <Route path="/users" element={<UsersPage />} />
             <Route
               path="/profile"
               element={
@@ -59,6 +62,7 @@ const App: React.FC = () => {
             <Route path="category" element={<Outlet />}>
               <Route path={":categoryId"} element={<CategoryProductsPage />} />
             </Route>
+            <Route path="/order/success/:orderId" element={<OrderSuccess />} />
           </Routes>
         </div>
         <Footer />

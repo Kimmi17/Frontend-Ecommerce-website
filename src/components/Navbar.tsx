@@ -1,6 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
 
 import { NavbarProps } from "../miscs/types/types";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
   );
 
   return (
-    <nav className="navbar p-8 bg-gray-200 dark:bg-slate-800">
+    <nav className="navbar p-8 bg-gray-200 dark:bg-slate-800 ">
       {/* Section 1: Logo, Icons */}
       <div className="flex flex-col md:flex-row items-center justify-between my-4">
         <div className="flex items-center md:mb-0 dark:bg-gray-200 rounded">
@@ -23,6 +23,14 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
             <img src="/logo.svg" alt="Logo" />
           </Link>
         </div>
+        <form className="bg-slate-100 p-3 rounded-lg flex items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent focus:outline-none w-24 sm:w-64"
+          />
+          <FaSearch className="text-slate-600" />
+        </form>
         <div className="navbar-icons flex gap-2 items-center">
           <ModeToggle />
           <Link to="/cart" className="mr-4 hover:text-gray-700">
@@ -69,6 +77,16 @@ const Navbar = ({ setSearchTerm, searchTerm }: NavbarProps) => {
                 className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
               >
                 Products
+              </Link>
+            </li>
+          )}
+          {isAdmin && (
+            <li className="mr-4">
+              <Link
+                to="/users"
+                className="text-lg hover:text-gray-900 font-custom dark:text-gray-300"
+              >
+                Users
               </Link>
             </li>
           )}

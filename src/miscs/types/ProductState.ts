@@ -2,7 +2,7 @@ import { Product, ProductResponse } from "./types";
 
 export interface ProductState {
   products: ProductResponse;
-  productsForAdmin: Product[];
+  productsForAdmin: ProductResponse;
   selectedProduct: Product | null;
   editProduct: Product | null;
   loading: boolean;
@@ -14,7 +14,10 @@ export const initialState: ProductState = {
     totalProduct: 0,
     products: [],
   },
-  productsForAdmin: [],
+  productsForAdmin: {
+    totalProduct: 0,
+    products: [],
+  },
   selectedProduct: null,
   editProduct: null,
   loading: false,

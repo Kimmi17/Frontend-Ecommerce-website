@@ -37,16 +37,22 @@ export interface CategoryCardProps {
   onClick?: () => void;
 }
 
+export interface Order {
+  _id: string;
+  paymentStatus: string;
+  totalPrice: number;
+  products: { product: Product; quantity: number }[];
+}
 export interface LoginFormValues {
   email: string;
   password: string;
 }
 
 export interface RegisterFormValues {
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   password: string;
-  confirmPassword: string;
 }
 
 export interface SearchBarProps {

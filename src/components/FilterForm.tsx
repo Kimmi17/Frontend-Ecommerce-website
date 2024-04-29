@@ -15,7 +15,7 @@ const FilterForm: React.FC = () => {
       offset: state.filters.filters.offset,
     }));
 
-  const [categoryId, setCategoryId] = useState(filterCategoryId || 0);
+  const [categoryId, setCategoryId] = useState(filterCategoryId || "ALL");
   const [orderBy, setOrderBy] = useState(filterOrderBy);
 
   const handleOrderByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,7 +23,7 @@ const FilterForm: React.FC = () => {
     store.dispatch(
       filterSlice.actions.updateFilter({
         filters: {
-          categoryId: categoryId.toString(),
+          categoryId: categoryId,
           orderBy: e.target.value as OrderBy,
           limit,
           offset,
@@ -88,7 +88,7 @@ const FilterForm: React.FC = () => {
               className="mt-1 px-4 py-2 block w-full border rounded"
               required
             >
-              <option value={0}>All</option>
+              <option value={"ALL"}>All</option>
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
                   {category.name}

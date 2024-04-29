@@ -6,55 +6,50 @@ import categorySlice, {
 } from "../redux/slices/categorySlice";
 
 // Mock data
+
 const mockCategories: Category[] = [
   {
-    id: 1,
-    name: "Electronics",
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
-    image: "image1.jpg",
+    _id: "1",
+    name: "Category 1",
+    image: "category1.jpg",
   },
   {
-    id: 2,
-    name: "Electronics",
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
-    image: "image1.jpg",
+    _id: "2",
+    name: "Category 2",
+    image: "category2.jpg",
+  },
+  {
+    _id: "3",
+    name: "Category 3",
+    image: "category3.jpg",
   },
 ];
 const mockProducts: Product[] = [
   {
-    id: 1,
+    _id: "1",
     title: "Product 1",
-    price: 10.0,
-    description: "A nice product",
-    category: {
-      id: 1,
-      name: "Electronics",
-      creationAt: "2024-03-08",
-      updatedAt: "2024-03-08",
-      image: "image1.jpg",
+    price: 10,
+    skinType: "Type A",
+    description: "Description 1",
+    image: ["image1.jpg", "image2.jpg"],
+    categoryId: {
+      _id: "1",
+      name: "Category 1",
+      image: "category1.jpg",
     },
-    images: ["img1.jpg"],
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
   },
-
   {
-    id: 2,
+    _id: "2",
     title: "Product 2",
-    price: 10.0,
-    description: "A nice product",
-    category: {
-      id: 1,
-      name: "Electronics",
-      creationAt: "2024-03-08",
-      updatedAt: "2024-03-08",
-      image: "image1.jpg",
+    price: 20,
+    skinType: "Type B",
+    description: "Description 2",
+    image: ["image3.jpg", "image4.jpg"],
+    categoryId: {
+      _id: "2",
+      name: "Category 2",
+      image: "category2.jpg",
     },
-    images: ["img1.jpg"],
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
   },
 ];
 

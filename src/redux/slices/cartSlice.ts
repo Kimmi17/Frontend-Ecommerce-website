@@ -38,8 +38,8 @@ const cartSlice = createSlice({
         (p) => p.id === action.payload
       );
       if (isProductExisted) {
-        state.products = state.products.map((p) => {
-          if (p.id === action.payload) {
+        state.productData = state.productData.map((p) => {
+          if (p._id === action.payload) {
             return {
               ...p,
               quantity: p.quantity + 1,
@@ -52,8 +52,8 @@ const cartSlice = createSlice({
       }
     },
     removeProductsToCart: (state, action: PayloadAction<string>) => {
-      const updateProducts = state.products.map((p) => {
-        if (p.id === action.payload) {
+      const updateProducts = state.productData.map((p) => {
+        if (p._id === action.payload) {
           return {
             ...p,
             quantity: p.quantity - 1,
@@ -61,11 +61,13 @@ const cartSlice = createSlice({
         }
         return p;
       });
-      state.products = updateProducts.filter((p) => p.quantity > 0);
+      state.productData = updateProducts.filter((p) => p.quantity > 0);
     },
     deleteProductsToCart: (state, action: PayloadAction<string>) => {
       const removeProductId = action.payload;
-      state.products = state.products.filter((p) => p.id !== removeProductId);
+      state.productData = state.productData.filter(
+        (p) => p._id !== removeProductId
+      );
     },
   },
   extraReducers: (builder) => {

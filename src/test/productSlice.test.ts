@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-identical-title */
 import { initialState } from "../miscs/types/ProductState";
 import { Product } from "../miscs/types/types";
 import productSlice, {
@@ -5,61 +6,65 @@ import productSlice, {
   fetchProductById,
 } from "../redux/slices/productSlice";
 
-const mockProduct1: Product = {
-  id: 1,
-  title: "Product 1",
-  price: 10.0,
-  description: "A nice product",
-  category: {
-    id: 1,
-    name: "Electronics",
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
-    image: "image1.jpg",
+// Mock products data
+const mockProducts: Product[] = [
+  {
+    _id: "1",
+    title: "Product 1",
+    price: 10,
+    skinType: "Type A",
+    description: "Description 1",
+    image: ["image1.jpg", "image2.jpg"],
+    categoryId: {
+      _id: "1",
+      name: "Category 1",
+      image: "category1.jpg",
+    },
   },
-  images: ["img1.jpg"],
-  creationAt: "2024-03-08",
-  updatedAt: "2024-03-08",
-};
-const mockProduct2: Product = {
-  id: 2,
-  title: "Product 2",
-  price: 20.0,
-  description: "An even better product",
-  category: {
-    id: 2,
-    name: "Clothing",
-    creationAt: "2024-03-08",
-    updatedAt: "2024-03-08",
-    image: "image2.jpg",
+  {
+    _id: "2",
+    title: "Product 2",
+    price: 20,
+    skinType: "Type B",
+    description: "Description 2",
+    image: ["image3.jpg", "image4.jpg"],
+    categoryId: {
+      _id: "2",
+      name: "Category 2",
+      image: "category2.jpg",
+    },
   },
-  images: ["img2.jpg", "img3.jpg"],
-  creationAt: "2024-03-08",
-  updatedAt: "2024-03-08",
-};
-const mockProducts: Product[] = [mockProduct1, mockProduct2];
+  {
+    _id: "3",
+    title: "Product 3",
+    price: 30,
+    skinType: "Type C",
+    description: "Description 3",
+    image: ["image5.jpg", "image6.jpg"],
+    categoryId: {
+      _id: "1",
+      name: "Category 1",
+      image: "category1.jpg",
+    },
+  },
+];
 
 describe("productSlice", () => {
-  // Test initial state
   test("should return initial state", () => {
     const expected = initialState;
     const received = productSlice.reducer(undefined, { type: "" });
     expect(received).toEqual(expected);
   });
 
-  // Test updateEditProduct reducer
   test("should update editProduct state", () => {
-    const expected = { ...initialState, editProduct: mockProduct1 };
+    const expected = { ...initialState, editProduct: mockProducts };
     const received = productSlice.reducer(initialState, {
       type: "updateEditProduct",
-      payload: mockProduct1,
+      payload: mockProducts,
     });
     expect(received).toEqual(expected);
   });
 
-  // Test fetchAllProducts extraReducers
-
-  // pending
   test("should set loading to true and error to null on pending action", () => {
     const expected = { ...initialState, loading: true, error: null };
     const received = productSlice.reducer(initialState, {
@@ -97,8 +102,9 @@ describe("productSlice", () => {
     expect(received).toEqual(expected);
   });
 
+  // Test fetchProductById extraReducers
+
   // pending
-  // eslint-disable-next-line jest/no-identical-title
   test("should set loading to true and error to null on pending action", () => {
     const expected = { ...initialState, loading: true, error: null };
     const received = productSlice.reducer(initialState, {
@@ -112,17 +118,16 @@ describe("productSlice", () => {
     const expected = {
       ...initialState,
       loading: false,
-      selectedProduct: mockProduct1,
+      selectedProduct: mockProducts[0],
     };
     const received = productSlice.reducer(initialState, {
       type: fetchProductById.fulfilled.type,
-      payload: mockProduct1,
+      payload: mockProducts[0],
     });
     expect(received).toEqual(expected);
   });
 
   // rejected
-  // eslint-disable-next-line jest/no-identical-title
   test("should set loading to false and error on rejected action", () => {
     const mockError = new Error("Network Error");
     const expected = {

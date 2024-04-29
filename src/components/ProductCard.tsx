@@ -22,7 +22,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     });
   };
 
-  console.log(">>> image", title, image[0]);
   return (
     <div className="w-full sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
       <div className="border rounded-xl p-4 h-full">

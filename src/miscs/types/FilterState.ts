@@ -11,7 +11,7 @@ export interface FilterState {
 
 export const initialState: FilterState = {
   filters: {
-    categoryId: null,
+    categoryId: "ALL",
     orderBy: null,
     limit: 24,
     offset: 0,

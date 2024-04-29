@@ -3,14 +3,18 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 const SignupForm: React.FC<{
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ setShowSignup }) => {
-  const [name, setName] = useState<string>("");
+  const [firstname, setFirstName] = useState<string>("");
+  const [lastname, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
-  const [isShopOwner, setIsShopOwner] = useState<boolean>(false);
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
   };
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,25 +29,21 @@ const SignupForm: React.FC<{
     setAvatar(e.target.value);
   };
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsShopOwner(e.target.checked);
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://api.escuelajs.co/api/v1/users/", {
+      const response = await fetch("http://localhost:8080/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
+          firstname,
+          lastname,
           email,
           password,
           avatar,
-          role: isShopOwner ? "admin" : "customer",
         }),
       });
 
@@ -54,7 +54,6 @@ const SignupForm: React.FC<{
       const data = await response.json();
       console.log("User created:", data);
 
-      // Assuming successful signup, you can redirect to login or any other action
       setShowSignup(false);
     } catch (error) {
       console.error("Error creating user:", error);
@@ -67,15 +66,35 @@ const SignupForm: React.FC<{
         <h2 className="text-2xl font-semibold mb-4">Signup</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-semibold">
-              Name
+            <label
+              htmlFor="first name"
+              className="block text-gray-700 font-semibold"
+            >
+              First name
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={handleNameChange}
+              id="first name"
+              name=" first name"
+              value={firstname}
+              onChange={handleFirstNameChange}
+              className="mt-1 px-4 py-2 block w-full border rounded-md"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="first name"
+              className="block text-gray-700 font-semibold"
+            >
+              Last name
+            </label>
+            <input
+              type="text"
+              id="last name"
+              name=" lasr name"
+              value={lastname}
+              onChange={handleLastNameChange}
               className="mt-1 px-4 py-2 block w-full border rounded-md"
               required
             />
@@ -131,19 +150,7 @@ const SignupForm: React.FC<{
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="isShopOwner" className="flex items-center">
-              <input
-                type="checkbox"
-                id="isShopOwner"
-                name="isShopOwner"
-                checked={isShopOwner}
-                onChange={handleCheckboxChange}
-                className="mr-2"
-              />
-              <span className="text-gray-700">I am a shop owner</span>
-            </label>
-          </div>
+
           <button
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"

@@ -74,8 +74,8 @@ describe("userSlice", () => {
       const mockRegisterFormValues: RegisterFormValues = {
         email: "test@example.com",
         password: "password",
-        name: "",
-        confirmPassword: "",
+        firstname: "",
+        lastname: "",
       };
 
       // Mock axios post
@@ -100,8 +100,8 @@ describe("userSlice", () => {
       const mockRegisterFormValues: RegisterFormValues = {
         email: "test@example.com",
         password: "password",
-        name: "",
-        confirmPassword: "",
+        firstname: "test",
+        lastname: "test",
       };
 
       // Mock axios post

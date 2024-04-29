@@ -82,20 +82,31 @@ const ProductForm: React.FC<ProductFormProps> = ({
         }),
       };
 
-      // if (product.creationAt) {
-      //   await axios.put(
-      //     `https://api.escuelajs.co/api/v1/products/${product._id}`,
-      //     data
-      //   );
-      //   if (submitCb) {
-      //     submitCb();
-      //   }
-      // } else {
-      //   await axios.post("https://api.escuelajs.co/api/v1/products/", data);
-      //   if (submitCb) {
-      //     submitCb();
-      //   }
-      // }
+      if (product._id) {
+        let accessToken = localStorage.getItem("accessToken");
+        await axios.put(
+          `http://localhost:8080/api/v1/products/${product._id}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (submitCb) {
+          submitCb();
+        }
+      } else {
+        let accessToken = localStorage.getItem("accessToken");
+        await axios.post("http://localhost:8080/api/v1/products/", data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        if (submitCb) {
+          submitCb();
+        }
+      }
 
       toast({
         title: "Product saved",
