@@ -20,7 +20,9 @@ const ProductList: React.FC = () => {
     (state: RootState) => getFiltersState(state).filters
   );
 
-  const products = useSelector((state: RootState) => state.products.products);
+  const products = useSelector(
+    (state: RootState) => state.products.products.products
+  );
 
   const { limit, offset, filterOrderBy, categoryId } = useSelector(
     (state: RootState) => {
@@ -35,7 +37,6 @@ const ProductList: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(offset / 24 + 1);
 
-  // Ensure products is an array before proceeding
   if (!Array.isArray(products)) {
     return <div>No products to display</div>;
   }
@@ -81,53 +82,49 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="product-list px-8">
-      {!categoryId && (
-        <Pagination className="mt-10">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={goPrevious} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>{currentPage}</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={goNext} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <Pagination className="mt-10">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious onClick={goPrevious} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>{currentPage}</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={goNext} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
       <div className="flex flex-wrap">
         {[...products].sort(sortProduct).map((product) => (
           <ProductCard
-            key={product.id}
-            id={product.id}
+            key={product._id}
+            id={product._id}
             price={product.price}
             title={product.title}
-            images={product.images}
+            image={product.image}
           />
         ))}
       </div>
-      {!categoryId && (
-        <Pagination className="my-4">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={goPrevious} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink>{currentPage}</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={goNext} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <Pagination className="my-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious onClick={goPrevious} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink>{currentPage}</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={goNext} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };

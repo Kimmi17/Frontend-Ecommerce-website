@@ -1,38 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { LoginFormValues, RegisterFormValues } from "../../miscs/types/types";
-import { User, initialState } from "../../miscs/types/UserState";
+import { UserData, initialState } from "../../miscs/types/UserState";
 import { toast } from "../../components/ui/use-toast";
 
-const apiUrl = "https://api.escuelajs.co/api/v1/auth";
+const url = "http://localhost:8080/api/v1/users";
 
-interface AuthResponse {
-  access_token: string;
-  refresh_token: string;
-}
+type AuthResponse = {
+  userData: UserData;
+  token: string;
+};
 
 export const loginUser = createAsyncThunk(
   "loginUser",
   async ({ email, password }: LoginFormValues) => {
     try {
-      const tokenResponse = await axios.post<AuthResponse>(`${apiUrl}/login`, {
+      const authResponse = await axios.post<AuthResponse>(`${url}/login`, {
         email,
         password,
       });
       let user = null;
-      if (tokenResponse) {
-        const userResponse = await axios.get<User>(`${apiUrl}/profile`, {
-          headers: {
-            Authorization: `Bearer ${tokenResponse.data.access_token}`,
-          },
-        });
-        user = userResponse.data;
-        localStorage.setItem("accessToken", tokenResponse.data.access_token);
-        localStorage.setItem("refreshToken", tokenResponse.data.refresh_token);
+      console.log(authResponse);
+      if (authResponse) {
+        user = authResponse.data.userData;
+        localStorage.setItem("accessToken", authResponse.data.token);
       }
       toast({
         title: "Login successful",
-        description: `Welcome back, ${user?.email}`,
+        description: `Welcome back, ${email}`,
         duration: 2000,
       });
       return user;
@@ -43,35 +38,40 @@ export const loginUser = createAsyncThunk(
 );
 
 export const getUserByToken = createAsyncThunk("getUserByToken", async () => {
-  let accessToken = localStorage.getItem("refreshToken");
-  let refreshToken = localStorage.getItem("refreshToken");
+  let accessToken = localStorage.getItem("accessToken");
   try {
-    if (refreshToken) {
-      const tokenResponse = await axios.post<AuthResponse>(
-        `${apiUrl}/refresh-token`,
+    if (accessToken) {
+      const userDataResponse = await axios.get<any>(
+        "http://localhost:8080/api/v1/users/getUserByToken",
         {
-          refreshToken,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
-      accessToken = tokenResponse.data.access_token;
-      refreshToken = tokenResponse.data.refresh_token;
+
+      return userDataResponse.data;
     }
-    let user = null;
-    if (accessToken && refreshToken) {
-      const userResponse = await axios.get<User>(`${apiUrl}/profile`, {
+
+    return initialState;
+  } catch (error) {
+    throw new Error("Invalid email or password");
+  }
+});
+
+export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
+  let accessToken = localStorage.getItem("accessToken");
+  try {
+    const userListResponse = await axios.get<any>(
+      "http://localhost:8080/api/v1/users",
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      });
-      user = userResponse.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-      toast({
-        title: "Login successful",
-        description: `Welcome back, ${user?.email}`,
-      });
-    }
-    return user;
+      }
+    );
+
+    return userListResponse.data;
   } catch (error) {
     throw new Error("Invalid email or password");
   }
@@ -81,11 +81,11 @@ export const registerUser = createAsyncThunk(
   "registerUser",
   async ({ email, password }: RegisterFormValues) => {
     try {
-      const response = await axios.post<AuthResponse>(`${apiUrl}/register`, {
+      const response = await axios.post<AuthResponse>(`${url}/register`, {
         email,
         password,
       });
-      return response.data.access_token;
+      return response.data.token;
     } catch (error) {
       throw new Error("Error registering user");
     }
@@ -97,6 +97,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
+      localStorage.removeItem("accessToken");
       state.currentUser = null;
       state.error = null;
     },
@@ -138,8 +139,20 @@ const userSlice = createSlice({
       })
       .addCase(getUserByToken.rejected, (state, action) => {
         state.isLoading = false;
-        state.error =
-          (action.payload as Error)?.message || "Error registering user";
+        localStorage.removeItem("accessToken");
+        state.error = (action.payload as Error)?.message || "Token expired";
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.users = action.payload;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as Error)?.message || "Token expired";
       });
   },
 });

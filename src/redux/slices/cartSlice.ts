@@ -5,7 +5,7 @@ import store, { RootState } from "../store";
 import axios from "axios";
 import { Product } from "../../miscs/types/types";
 
-const url = "https://api.escuelajs.co/api/v1/products";
+const url = "http://localhost:8080/api/v1/products";
 
 export const fetchProductsByIds = createAsyncThunk(
   "fetchProductByIds",
@@ -16,7 +16,7 @@ export const fetchProductsByIds = createAsyncThunk(
         products.map((p) => axios.get<Product>(`${url}/${p.id}`))
       );
       return response.map((x) => {
-        const productX = products.find((p) => p.id === x.data.id);
+        const productX = products.find((p) => p.id === x.data._id);
         if (productX) {
           return { ...x.data, quantity: productX.quantity };
         } else {
@@ -33,13 +33,13 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addProductsToCart: (state, action: PayloadAction<number>) => {
+    addProductsToCart: (state, action: PayloadAction<string>) => {
       const isProductExisted = state.products.some(
         (p) => p.id === action.payload
       );
       if (isProductExisted) {
-        state.products = state.products.map((p) => {
-          if (p.id === action.payload) {
+        state.productData = state.productData.map((p) => {
+          if (p._id === action.payload) {
             return {
               ...p,
               quantity: p.quantity + 1,
@@ -51,9 +51,9 @@ const cartSlice = createSlice({
         state.products.push({ id: action.payload, quantity: 1 });
       }
     },
-    removeProductsToCart: (state, action: PayloadAction<number>) => {
-      const updateProducts = state.products.map((p) => {
-        if (p.id === action.payload) {
+    removeProductsToCart: (state, action: PayloadAction<string>) => {
+      const updateProducts = state.productData.map((p) => {
+        if (p._id === action.payload) {
           return {
             ...p,
             quantity: p.quantity - 1,
@@ -61,11 +61,13 @@ const cartSlice = createSlice({
         }
         return p;
       });
-      state.products = updateProducts.filter((p) => p.quantity > 0);
+      state.productData = updateProducts.filter((p) => p.quantity > 0);
     },
-    deleteProductsToCart: (state, action: PayloadAction<number>) => {
+    deleteProductsToCart: (state, action: PayloadAction<string>) => {
       const removeProductId = action.payload;
-      state.products = state.products.filter((p) => p.id !== removeProductId);
+      state.productData = state.productData.filter(
+        (p) => p._id !== removeProductId
+      );
     },
   },
   extraReducers: (builder) => {

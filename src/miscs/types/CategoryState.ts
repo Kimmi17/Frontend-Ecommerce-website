@@ -1,15 +1,18 @@
-import { Category, Product } from "./types";
+import { Category, Product, ProductResponse } from "./types";
 
 export interface CategoryState {
   categories: Category[];
   loading: boolean;
   error: string | null;
-  products: Product[];
+  products: ProductResponse;
 }
 
 export const initialState: CategoryState = {
   categories: [],
   loading: false,
   error: null,
-  products: [],
+  products: {
+    totalProduct: 0,
+    products: [],
+  },
 };

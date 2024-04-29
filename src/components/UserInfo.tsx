@@ -1,10 +1,10 @@
 import React from "react";
-import { User } from "../miscs/types/UserState";
+import { UserData } from "../miscs/types/UserState";
 import store from "../redux/store";
 import userSlice from "../redux/slices/userSlice";
 
 interface UserInfoProps {
-  user: User;
+  user: UserData;
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
@@ -29,13 +29,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             className="w-16 h-16 rounded-full mr-4"
           />
           <div>
-            <p className="text-lg font-semibold">{user.name}</p>
+            <p className="text-lg font-semibold">{user.firstname}</p>
+            <p className="text-lg font-semibold">{user.lastname}</p>
             <p className="text-gray-600">{user.email}</p>
           </div>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold">ID:</label>
-          <p className="text-gray-800">{user.id}</p>
+          <p className="text-gray-800">{user._id}</p>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold">Role:</label>
@@ -46,7 +47,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             Creation Date:
           </label>
           <p className="text-gray-800">
-            {new Date(user.creationAt).toLocaleString()}
+            {/* {new Date(user.creationAt).toLocaleString()} */}
           </p>
         </div>
         <div className="mb-4">
@@ -54,7 +55,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
             Updated Date:
           </label>
           <p className="text-gray-800">
-            {new Date(user.updatedAt).toLocaleString()}
+            {/* {new Date(user.updatedAt).toLocaleString()} */}
           </p>
         </div>
         <button

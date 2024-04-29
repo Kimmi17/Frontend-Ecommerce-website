@@ -27,11 +27,17 @@ const Category = () => {
         Categories
       </h2>
       <div className="flex flex-wrap">
-        {categories
-          .filter((c) => c.id <= 5)
-          .map((c) => (
-            <CategoryCard key={c.id} id={c.id} name={c.name} image={c.image} />
-          ))}
+        {categories.map((c, i) => {
+          if (i > 5) return null;
+          return (
+            <CategoryCard
+              key={c._id}
+              id={c._id}
+              name={c.name}
+              image={c.image}
+            />
+          );
+        })}
       </div>
     </div>
   );

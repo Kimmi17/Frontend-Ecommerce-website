@@ -30,12 +30,14 @@ const LoginForm: React.FC<{
 
     // Validation
     const validationErrors: { email?: string; password?: string } = {};
+
     if (!email) {
       validationErrors.email = "Email is required";
     }
     if (!password) {
       validationErrors.password = "Password is required";
     }
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -43,7 +45,6 @@ const LoginForm: React.FC<{
 
     try {
       dispatch(loginUser({ email, password }));
-      console.log("Login successful");
       return <Navigate to="/profile" replace />;
     } catch (error) {
       console.error("Error logging in:", error);
@@ -80,7 +81,6 @@ const LoginForm: React.FC<{
               className={`mt-1 px-4 py-2 block w-full border rounded-md focus:outline-none ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
-              required
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -103,7 +103,6 @@ const LoginForm: React.FC<{
               className={`mt-1 px-4 py-2 block w-full border rounded-md focus:outline-none ${
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
-              required
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password}</p>

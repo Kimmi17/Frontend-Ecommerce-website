@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,7 +13,7 @@ import { Button } from "../components/ui/button";
 import {
   deleteProductById,
   fetchAllProductsForAdmin,
-  searchProductsByTitle,
+  searchProductsByKeyword,
 } from "../redux/slices/productSlice";
 import { Input } from "../components/ui/input";
 import {
@@ -37,28 +36,33 @@ const ProductsPage = () => {
     (state: RootState) => state.products.productsForAdmin
   );
 
-  useEffect(() => {
-    dispatch(fetchAllProductsForAdmin());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAllProductsForAdmin());
+  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(searchProductsByTitle(keyword));
+    if (keyword && keyword.length > 3) {
+      dispatch(searchProductsByKeyword(keyword));
+    }
+    if (!keyword) {
+      dispatch(fetchAllProductsForAdmin());
+    }
   }, [dispatch, keyword]);
 
-  const handleDeleteProduct = async (id: number) => {
+  const handleDeleteProduct = async (id: string) => {
     await dispatch(deleteProductById(id));
-    dispatch(searchProductsByTitle(keyword));
+    dispatch(searchProductsByKeyword(keyword));
   };
 
   const submitCb = () => {
-    dispatch(searchProductsByTitle(keyword));
+    dispatch(searchProductsByKeyword(keyword));
   };
   return (
     <div>
       <div className="flex pr-2 py-2 gap-4 justify-end dark:bg-slate-800">
         <Input
           type="text"
-          placeholder="Search product by title"
+          placeholder="Search product by keyword"
           onChange={(e) => setkeyword(e.target.value)}
           className="rounded max-w-[200px] md:max-w-[320px] dark:bg-gray-200"
         />
@@ -90,12 +94,12 @@ const ProductsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {productsForAdmin.map((p) => (
-              <TableRow key={p.id}>
-                <TableCell>{p.id}</TableCell>
+            {productsForAdmin.products.map((p) => (
+              <TableRow key={p._id}>
+                <TableCell>{p._id}</TableCell>
                 <TableCell>{p.title}</TableCell>
                 <TableCell className="hidden gap-2 md:flex">
-                  {p.images.map((i) => (
+                  {p.image.map((i) => (
                     <img
                       key={i}
                       src={i.replace(/^\["|"\]$/g, "")}
@@ -156,7 +160,7 @@ const ProductsPage = () => {
                         <DialogClose asChild>
                           <Button
                             className="mr-2 bg-red-500 hover:bg-red-600 text-white rounded"
-                            onClick={() => handleDeleteProduct(p.id)}
+                            onClick={() => handleDeleteProduct(p._id)}
                           >
                             Delete
                           </Button>

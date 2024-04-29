@@ -1,8 +1,8 @@
-import { Product } from "./types";
+import { Product, ProductResponse } from "./types";
 
 export interface ProductState {
-  products: Product[];
-  productsForAdmin: Product[];
+  products: ProductResponse;
+  productsForAdmin: ProductResponse;
   selectedProduct: Product | null;
   editProduct: Product | null;
   loading: boolean;
@@ -10,8 +10,14 @@ export interface ProductState {
 }
 
 export const initialState: ProductState = {
-  products: [],
-  productsForAdmin: [],
+  products: {
+    totalProduct: 0,
+    products: [],
+  },
+  productsForAdmin: {
+    totalProduct: 0,
+    products: [],
+  },
   selectedProduct: null,
   editProduct: null,
   loading: false,

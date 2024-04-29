@@ -15,20 +15,17 @@ interface ProductFormProps {
 }
 
 const initialProduct: Product = {
-  id: 0,
+  _id: "",
   title: "",
   price: 0,
   description: "",
-  category: {
-    id: 0,
+  skinType: "",
+  categoryId: {
+    _id: "",
     name: "",
     image: "",
-    creationAt: "",
-    updatedAt: "",
   },
-  images: [],
-  creationAt: "",
-  updatedAt: "",
+  image: [],
 };
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -44,10 +41,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const [description, setDescription] = useState<string>(
     product?.description || ""
   );
-  const [categoryId, setCategoryId] = useState<number>(
-    product?.id || categories[0].id
+  const [categoryId, setCategoryId] = useState<string>(
+    product?._id || categories[0]._id
   );
-  const [images, setImages] = useState<string[]>(product?.images || []);
+  const [images, setImages] = useState<string[]>(product?.image || []);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -62,7 +59,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   };
 
   const handleCategoryIdChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId(Number(e.target.value));
+    setCategoryId(e.target.value);
   };
 
   const handleImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,22 +76,33 @@ const ProductForm: React.FC<ProductFormProps> = ({
         title,
         price,
         description,
-        categoryId: categories.find((c) => c.id === categoryId)?.id,
+        categoryId: categories.find((c) => c._id === categoryId)?._id,
         images: images.map((image) => {
           return image.replace(/^\["|"\]$/g, "");
         }),
       };
 
-      if (product.creationAt) {
+      if (product._id) {
+        let accessToken = localStorage.getItem("accessToken");
         await axios.put(
-          `https://api.escuelajs.co/api/v1/products/${product.id}`,
-          data
+          `http://localhost:8080/api/v1/products/${product._id}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
         if (submitCb) {
           submitCb();
         }
       } else {
-        await axios.post("https://api.escuelajs.co/api/v1/products/", data);
+        let accessToken = localStorage.getItem("accessToken");
+        await axios.post("http://localhost:8080/api/v1/products/", data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         if (submitCb) {
           submitCb();
         }
@@ -175,7 +183,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             required
           >
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option key={category._id} value={category._id}>
                 {category.name}
               </option>
             ))}

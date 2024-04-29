@@ -9,7 +9,7 @@ const LoginPage = () => {
   const user = useSelector((state: RootState) => state.user.currentUser);
 
   if (user) {
-    return <Navigate to="/profile" replace />;
+    return <Navigate to="/" replace />;
   }
   return <AuthModal />;
 };

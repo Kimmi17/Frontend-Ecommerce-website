@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   Table,
@@ -14,10 +15,16 @@ import { Button } from "../components/ui/button";
 import store, { RootState } from "../redux/store";
 import {
   addProductsToCart,
+  deleteProductsToCart,
   fetchProductsByIds,
   removeProductsToCart,
 } from "../redux/slices/cartSlice";
 import { Product } from "../miscs/types/types";
+import { LogIn } from "lucide-react";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
+
+// const KEY = process.env.STRIPE_SECRET_KEY || "";
 
 const CartPage: React.FC = () => {
   const dispatch = store.dispatch;
@@ -25,25 +32,52 @@ const CartPage: React.FC = () => {
     (state: RootState) => state.cart.productData
   );
 
+  const user = useSelector((state: RootState) => state.user.currentUser);
+  const navigate = useNavigate();
+
   const [toastMessage, setToastMessage] = useState<string>("");
 
-  const handleRemove = (productId: number) => {
-    dispatch(removeProductsToCart(productId));
+  const handleRemove = (productId: string) => {
+    dispatch(deleteProductsToCart(productId));
   };
 
   const handleIncrease = (p: Product) => {
-    dispatch(addProductsToCart(p.id));
+    dispatch(addProductsToCart(p._id));
   };
 
-  const handleDecrease = (productId: number) => {
+  const handleDecrease = (productId: string) => {
     dispatch(removeProductsToCart(productId));
   };
 
-  const handleCheckout = () => {
-    setToastMessage("You need to log in to check out."); // Setting the toast message
-    setTimeout(() => {
-      setToastMessage(""); // Clearing the toast message after a certain time
-    }, 3000); // Adjust the duration as needed
+  const handleCheckout = async () => {
+    // setToastMessage("You need to log in to check out."); // Setting the toast message
+    // setTimeout(() => {
+    //   setToastMessage(""); // Clearing the toast message after a certain time
+    // }, 3000); // Adjust the duration as needed
+    if (user) {
+      // show Stripe form ==> /
+      let accessToken = localStorage.getItem("accessToken");
+
+      const makePayment = await axios.post(
+        "http://localhost:8080/api/v1/payment",
+        {
+          receipt_email: user?.email,
+          order: cartProducts,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const checkoutUrl = makePayment.data.url;
+      window.location.href = checkoutUrl;
+    } else {
+      console.log(">>>");
+      // Navigate to login page
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -71,7 +105,7 @@ const CartPage: React.FC = () => {
           </TableHeader>
           <TableBody>
             {cartProducts.map((p) => (
-              <TableRow key={p.id}>
+              <TableRow key={p._id}>
                 <TableCell>{p.title}</TableCell>
                 <TableCell>{p.price}</TableCell>
                 <TableCell>{p.quantity}</TableCell>
@@ -85,13 +119,13 @@ const CartPage: React.FC = () => {
                   </Button>
                   <Button
                     className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                    onClick={() => handleDecrease(p.id)}
+                    onClick={() => handleDecrease(p._id)}
                   >
                     -
                   </Button>
                   <Button
                     className="mr-2 bg-red-500 hover:bg-red-600 text-white"
-                    onClick={() => handleRemove(p.id)}
+                    onClick={() => handleRemove(p._id)}
                   >
                     Remove
                   </Button>

@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { Product } from "../../miscs/types/types";
+import { Product, ProductResponse } from "../../miscs/types/types";
 import { initialState } from "../../miscs/types/ProductState";
 import store from "../store";
 
-const url = "https://api.escuelajs.co/api/v1/products";
+const url = "http://localhost:8080/api/v1/products";
 
 export const fetchAllProducts = createAsyncThunk(
   "fetchAllProducts",
   async () => {
     const filters = store.getState().filters.filters;
-    let filterParams = ``;
+    let filterUrl = url;
 
-    if (filters.categoryId !== null) {
-      filterParams += `?categoryId=${filters.categoryId}`;
+    if (filters.categoryId === "ALL") {
+      filterUrl += `?offset=${filters.offset}&limit=${filters.limit}`;
     } else {
-      filterParams += `?offset=${filters.offset}&limit=${filters.limit}`;
+      filterUrl += `/category/${filters.categoryId}`;
     }
 
     try {
-      const response = await axios.get<Product[]>(url + filterParams);
+      const response = await axios.get<ProductResponse>(filterUrl);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching products");
@@ -32,7 +32,7 @@ export const fetchAllProductsForAdmin = createAsyncThunk(
   "fetchAllProductsForAdmin",
   async () => {
     try {
-      const response = await axios.get<Product[]>(url);
+      const response = await axios.get<ProductResponse>(url);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching products");
@@ -42,9 +42,14 @@ export const fetchAllProductsForAdmin = createAsyncThunk(
 
 export const deleteProductById = createAsyncThunk(
   "deleteProductById",
-  async (id: number) => {
+  async (id: string) => {
     try {
-      const response = await axios.delete<Product[]>(`${url}/${id}`);
+      let accessToken = localStorage.getItem("accessToken");
+      const response = await axios.delete<ProductResponse>(`${url}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       return response.data;
     } catch (error) {
       throw new Error("Error deleting product with id: " + id);
@@ -52,11 +57,13 @@ export const deleteProductById = createAsyncThunk(
   }
 );
 
-export const searchProductsByTitle = createAsyncThunk(
-  "searchProductsByTitle",
+export const searchProductsByKeyword = createAsyncThunk(
+  "searchProductsByKeyword",
   async (keyword: string) => {
     try {
-      const response = await axios.get<Product[]>(`${url}/?title=${keyword}`);
+      const response = await axios.get<ProductResponse>(
+        `${url}/search/${keyword}`
+      );
       return response.data;
     } catch (error) {
       throw new Error("Error fetching products");
@@ -121,15 +128,15 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Error fetching product by ID";
       })
-      .addCase(searchProductsByTitle.pending, (state) => {
+      .addCase(searchProductsByKeyword.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(searchProductsByTitle.fulfilled, (state, action) => {
+      .addCase(searchProductsByKeyword.fulfilled, (state, action) => {
         state.loading = false;
         state.productsForAdmin = action.payload;
       })
-      .addCase(searchProductsByTitle.rejected, (state, action) => {
+      .addCase(searchProductsByKeyword.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.error.message || "Error searching product by title";

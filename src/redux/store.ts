@@ -12,6 +12,7 @@ export const rootReducer = combineSlices(
   userSlice,
   cartSlice,
   filterSlice
+  // orderSlice
 );
 const store = configureStore({
   reducer: rootReducer,
